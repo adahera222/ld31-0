@@ -27,6 +27,25 @@ define (require, exports, module) ->
       @player = new Player this
       @player.setPosition(@getWidth() / 2, @getHeight() / 2)
 
+      @gravity = new LDFW.Vector2 0, 10
+
+    ###
+     * Gets called ~60 times per second. Update positions
+     * etc. here
+     * @param  {Number} delta
+     * @private
+    ###
+    update: (delta) ->
+      super
+
+      # Don't do this. You should actually
+      # have a separate `Game` managing class
+      # outside of this class that only lives
+      # inside your Game Screen.
+      #
+      # This example will be fixed soon.
+      @player.update delta / 1000
+
     ###
      * Gets called as soon as the preloader
      * has preloaded all assets
@@ -56,6 +75,12 @@ define (require, exports, module) ->
      * @public
     ###
     getPlayer: -> @player
+
+    ###
+     * Gets the gravity
+     * @return {LDFW.Vector2}
+    ###
+    getGravity: -> @gravity
 
   ###
    * Expose Game

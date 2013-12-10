@@ -26,7 +26,11 @@ define (require, exports, module) ->
     ###
     draw: (context) ->
       playerPosition = @player.getPosition()
-      @sprite.draw context, playerPosition.x, playerPosition.y
+
+      finalX = playerPosition.getX()
+      finalY = playerPosition.getY() + @sprite.getHeight()
+
+      @sprite.draw context, finalX, finalY
       return
 
   ###
