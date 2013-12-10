@@ -4,6 +4,7 @@ define (require, exports, module) ->
   ###
   LDFW = require "ldfw"
   GameScreen = require "./screens/game-screen"
+  Player = require "./player"
 
   ###
    * Game definition
@@ -22,6 +23,9 @@ define (require, exports, module) ->
       ]
       @preloader.on "done", @_onPreloaded
       @preloader.load()
+
+      @player = new Player this
+      @player.setPosition(@getWidth() / 2, @getHeight() / 2)
 
     ###
      * Gets called as soon as the preloader
@@ -46,6 +50,12 @@ define (require, exports, module) ->
     ###
     getSpritesAtlas: -> @spritesAtlas
 
+    ###
+     * Gets the player
+     * @return {Player}
+     * @public
+    ###
+    getPlayer: -> @player
 
   ###
    * Expose Game

@@ -14,6 +14,9 @@ define (require, exports, module) ->
       # Get the sprites atlas from our game
       @spritesAtlas = @game.getSpritesAtlas()
 
+      # Get the player object from our game
+      @player = @game.getPlayer()
+
       # Create a new sprite from the atlas
       @sprite = @spritesAtlas.createSprite "player/idle.png"
 
@@ -22,7 +25,8 @@ define (require, exports, module) ->
      * @param  {Canvas2D} context
     ###
     draw: (context) ->
-      @sprite.draw context, 0, 0
+      playerPosition = @player.getPosition()
+      @sprite.draw context, playerPosition.x, playerPosition.y
       return
 
   ###
