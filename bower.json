@@ -1,0 +1,15 @@
+{
+  "name": "ldfw-coffee-example",
+  "version": "0.0.1",
+  "homepage": "https://github.com/saschagehlich/ldfw-coffee-example",
+  "authors": [
+    "Sascha Gehlich <sascha@gehlich.us>"
+  ],
+  "description": "LDFW CoffeeScript Example",
+  "license": "MIT",
+  "dependencies": {
+    "ldfw": "git://github.com/saschagehlich/ldfw.git",
+    "requirejs": "~2.1.9",
+    "jquery": "~2.0.3"
+  }
+}
