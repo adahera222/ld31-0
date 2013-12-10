@@ -11,7 +11,7 @@ module.exports = (grunt) ->
 
     exec:
       build_assets:
-        command: "TexturePacker --sheet build/assets/sprites.png --data build/assets/sprites.json --texture-format png --format json assets/sprites"
+        command: "TexturePacker --sheet build/assets/sprites.png --data build/assets/sprites.json --texture-format png --format json --disable-rotation assets/sprites"
 
     connect:
       site:
