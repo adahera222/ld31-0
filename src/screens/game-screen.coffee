@@ -28,6 +28,9 @@ define (require, exports, module) ->
      * @param  {Canvas2DContext} context
     ###
     draw: (context) ->
+      context.fillStyle = "#49A0E8"
+      context.fillRect 0, 0, context.canvas.width, context.canvas.height
+
       @gameStage.draw context
       return
 

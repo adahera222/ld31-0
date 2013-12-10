@@ -15,7 +15,10 @@ define (require, exports, module) ->
       # Preload assets
       @preloader = new LDFW.Preloader this, [
         "assets/sprites.json",
-        "assets/sprites.png"
+        "assets/sprites.png",
+        "assets/tiles.json",
+        "assets/tiles.png",
+        "assets/tm-bottom.json"
       ]
       @preloader.on "done", @_onPreloaded
       @preloader.load()
@@ -30,6 +33,7 @@ define (require, exports, module) ->
       # JSON and PNG
       spritesJSON = @preloader.get "assets/sprites.json"
       spritesImage = @preloader.get "assets/sprites.png"
+
       @spritesAtlas = new LDFW.TextureAtlas spritesJSON.frames, spritesImage
 
       @screen = new GameScreen this

@@ -1,7 +1,7 @@
 requirejs.config
   paths:
     jquery: "../lib/jquery/jquery"
-    ldfw: "../lib/ldfw/ldfw"
+    ldfw: "../ldfw"
     eventemitter: "../lib/eventEmitter/eventEmitter"
     async: "../lib/async/lib/async"
 
