@@ -27,7 +27,7 @@ define (require, exports, module) ->
       @player = new Player this
       @player.setPosition(@getWidth() / 2, @getHeight() / 2)
 
-      @gravity = new LDFW.Vector2 0, 10
+      @gravity = new LDFW.Vector2 0, 1800
 
     ###
      * Gets called ~60 times per second. Update positions
@@ -44,7 +44,7 @@ define (require, exports, module) ->
       # inside your Game Screen.
       #
       # This example will be fixed soon.
-      @player.update delta / 1000
+      @player.update delta
 
     ###
      * Gets called as soon as the preloader
