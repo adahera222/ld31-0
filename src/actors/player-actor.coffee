@@ -11,14 +11,19 @@ define (require, exports, module) ->
     constructor: ->
       super
 
-      # Get the sprites atlas from our game
       @spritesAtlas = @game.getSpritesAtlas()
-
-      # Get the player object from our game
       @player = @game.getPlayer()
 
-      # Create a new sprite from the atlas
       @sprite = @spritesAtlas.createSprite "player/idle.png"
+      @runAnimSprite = @spritesAtlas.createAnimSprite "player/run.png", 2, 0.05
+      @offgroundAnimSprite = @spritesAtlas.createAnimSprite "player/offground.png", 3, 0.1
+
+    ###
+     * Update the animation sprites
+    ###
+    update: (delta) ->
+      @runAnimSprite.update delta
+      @offgroundAnimSprite.update delta
 
     ###
      * Draw the player sprite
@@ -30,7 +35,15 @@ define (require, exports, module) ->
       finalX = playerPosition.getX()
       finalY = playerPosition.getY() + @sprite.getHeight()
 
-      @sprite.draw context, finalX, finalY
+      mirrored = @player.direction is -1
+
+      unless @player.onGround
+        @offgroundAnimSprite.draw context, finalX, finalY, mirrored
+      else if @player.velocity.x isnt 0
+        @runAnimSprite.draw context, finalX, finalY, mirrored
+      else
+        @sprite.draw context, finalX, finalY, mirrored
+
       return
 
   ###

@@ -35,7 +35,7 @@ define (require, exports, module) ->
       if @velocity.getX() > 0
         @direction = 1
       else if @velocity.getX() < 0
-        direction = -1
+        @direction = -1
 
       return @position.clone().add velocityStep
 
