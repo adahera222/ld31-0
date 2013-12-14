@@ -67,6 +67,7 @@ define (require, exports, module) ->
             else
               @package.velocity.x = @direction * @minimumThrowingVelocity
 
+    # Todo: Move this to the level.
     _handleLevelScrolling: ->
       maxX = @level.scroll.x + @app.getWidth() - @game.horizontalScrollPadding * @app.getWidth()
       if @position.x > maxX
@@ -75,6 +76,9 @@ define (require, exports, module) ->
       minX = @level.scroll.x + @game.horizontalScrollPadding * @app.getWidth()
       if @position.x < minX
         @level.scroll.x -= minX - @position.x
+
+      minX = 0
+      @level.scroll.x = Math.max 0, @level.scroll.x
 
       scrollPadding = @game.verticalScrollPadding * @app.getHeight()
       minY = scrollPadding

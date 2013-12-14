@@ -4,7 +4,7 @@ define (require, exports, module) ->
   ###
   HumanActor = require "actors/human-actor"
 
-  class PlayerActor extends HumanActor
+  class EnemyActor extends HumanActor
     spriteBasePath: "player"
 
-  module.exports = PlayerActor
+  module.exports = EnemyActor

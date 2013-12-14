@@ -5,6 +5,7 @@ define (require, exports, module) ->
   LDFW = require "ldfw"
   LevelActor = require "actors/level-actor"
   PlayerActor = require "actors/player-actor"
+  EnemyActor = require "actors/enemy-actor"
   PackageActor = require "actors/package-actor"
 
   ###
@@ -17,13 +18,19 @@ define (require, exports, module) ->
       @levelActor = new LevelActor @app, @game
       @addActor @levelActor
 
-      @playerActor = new PlayerActor @app, @game
+      @playerActor = new PlayerActor @app, @game, @game.player
       @addActor @playerActor
 
       @packageActor = new PackageActor @app, @game
       @addActor @packageActor
 
       @mobActors = [@playerActor]
+      @game.on "enemy_added", (enemy) =>
+        mobActor = new EnemyActor @app, @game, enemy
+        @mobActors.push mobActor
+        @addActor mobActor
+
+      @game.addEnemy()
 
     update: (delta) ->
       super
@@ -41,7 +48,10 @@ define (require, exports, module) ->
       context.fillRect 0, 0, width, height
 
       @levelActor.draw context
-      @playerActor.draw context
+
+      for mobActor in @mobActors
+        mobActor.draw context
+
       @packageActor.draw context
 
   ###
