@@ -19,8 +19,27 @@ define (require, exports, module) ->
         height: 7
       }
 
-    update: (delta) ->
-      return
+    isMobTouchingLadder: (mob) ->
+      for ladder in @ladders
+        ladderPosition = ladder.position
+          .clone()
+          .multiply @GRID_SIZE
+        ladderHeight = ladder.height * @GRID_SIZE
+        ladderWidth = @GRID_SIZE
+
+        # Horizontal check
+        if mob.position.x + mob.width > ladderPosition.x and
+          mob.position.x < ladderPosition.x + ladderWidth
+
+            # Vertical check
+            ladderY = (@app.getHeight() - ladderPosition.y)
+            if mob.position.y > @app.getHeight() - ladderHeight and
+              mob.position.y < ladderY
+
+                intersection = true
+                return true
+
+      return false
 
     getBoundariesForObject: (obj) ->
       boundaries =

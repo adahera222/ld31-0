@@ -8,6 +8,7 @@ define (require, exports, module) ->
       super
 
       {@package} = @game
+      @speed = new LDFW.Vector2 500, 500
       @lastPackageInteraction = Date.now()
 
     canInteractWithPackage: ->

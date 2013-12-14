@@ -5,7 +5,6 @@ define (require, exports, module) ->
     constructor: (@app, @game) ->
       {@level} = @game
 
-      @speed = new LDFW.Vector2 500, 0
       @position = new LDFW.Vector2
       @velocity = new LDFW.Vector2 0, 100
       @jumpForce = 1500
@@ -16,12 +15,14 @@ define (require, exports, module) ->
       @height = 0
 
       @onGround = false
+      @ignoreGravity = false
 
     update: (delta) ->
-      gravityStep = @level.gravity.clone()
-      gravityStep.multiply delta
+      unless @ignoreGravity
+        gravityStep = @level.gravity.clone()
+        gravityStep.multiply delta
 
-      @velocity.add gravityStep
+        @velocity.add gravityStep
 
       velocityStep = @velocity.clone()
       velocityStep.multiply delta

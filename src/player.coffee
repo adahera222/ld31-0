@@ -18,7 +18,7 @@ define (require, exports, module) ->
     _handleKeyboard: ->
       moveLeft = @keyboard.pressed @keyboard.Keys.LEFT
       moveRight = @keyboard.pressed @keyboard.Keys.RIGHT
-      jump = @keyboard.pressed @keyboard.Keys.UP
+      moveUp = @keyboard.pressed @keyboard.Keys.UP
       throwPackage = @keyboard.pressed @keyboard.Keys.SPACE
 
       if moveLeft
@@ -30,8 +30,16 @@ define (require, exports, module) ->
       else
         @velocity.x = 0
 
-      if jump and @onGround
+      touchingLadder = @level.isMobTouchingLadder this
+      if moveUp and @onGround and not touchingLadder
         @velocity.y = -@jumpForce
+      else if moveUp and touchingLadder
+        @velocity.y = -@speed.y
+        @ignoreGravity = true
+      else unless touchingLadder
+        @ignoreGravity = false
+      else
+        @velocity.y = 0
 
       if throwPackage and
         @package.attachedMob is this and
