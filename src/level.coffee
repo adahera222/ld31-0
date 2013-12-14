@@ -12,10 +12,19 @@ define (require, exports, module) ->
 
       @platforms.push new Platform @app, @game, {
         position: new LDFW.Vector2 4, 7
+        width: 15
+      }
+      @platforms.push new Platform @app, @game, {
+        position: new LDFW.Vector2 10, 14
         width: 8
       }
+
       @ladders.push new Ladder @app, @game, {
         position: new LDFW.Vector2 9, 0
+        height: 7
+      }
+      @ladders.push new Ladder @app, @game, {
+        position: new LDFW.Vector2 14, 7
         height: 7
       }
 
@@ -33,7 +42,7 @@ define (require, exports, module) ->
 
             # Vertical check
             ladderY = (@app.getHeight() - ladderPosition.y)
-            if mob.position.y > @app.getHeight() - ladderHeight and
+            if mob.position.y > @app.getHeight() - ladderHeight - ladderPosition.y and
               mob.position.y < ladderY
 
                 intersection = true
