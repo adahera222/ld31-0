@@ -4,21 +4,21 @@ define (require, exports, module) ->
   ###
   LDFW = require "ldfw"
 
-  class PlayerActor extends LDFW.Actor
+  class PackageActor extends LDFW.Actor
     constructor: (@app, @game) ->
       super @game
 
-      @player = @game.player
+      {@player, @package} = @game
 
       @width = 32
-      @height = 64
+      @height = 32
 
     update: ->
       super
-      @position.set @player.position
+      @position.set @package.position
 
     draw: (context) ->
-      context.fillStyle = "red"
+      context.fillStyle = "blue"
       context.fillRect @position.x, @position.y - @height, @width, @height
 
-  module.exports = PlayerActor
+  module.exports = PackageActor

@@ -3,7 +3,7 @@ define (require, exports, module) ->
 
   class Level
     constructor: (@app, @game) ->
-      @gravity = new LDFW.Vector2 0, 1200
+      @gravity = new LDFW.Vector2 0, 5000
 
     update: (delta) ->
       return

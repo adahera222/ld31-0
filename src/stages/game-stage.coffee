@@ -4,6 +4,7 @@ define (require, exports, module) ->
   ###
   LDFW = require "ldfw"
   PlayerActor = require "actors/player-actor"
+  PackageActor = require "actors/package-actor"
 
   ###
    * GameStage definition
@@ -15,6 +16,9 @@ define (require, exports, module) ->
       @playerActor = new PlayerActor @app, @game
       @addActor @playerActor
 
+      @packageActor = new PackageActor @app, @game
+      @addActor @packageActor
+
     draw: (context) ->
       super
 
@@ -24,6 +28,7 @@ define (require, exports, module) ->
       context.fillRect 0, 0, width, height
 
       @playerActor.draw context
+      @packageActor.draw context
 
   ###
    * Expose GameStage

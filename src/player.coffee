@@ -1,44 +1,27 @@
 define (require, exports, module) ->
   LDFW = require "ldfw"
+  Mob = require "mob"
 
-  class Player
+  class Player extends Mob
     constructor: (@app, @game) ->
-      @level = @game.level
+      super
 
+      {@package} = @game
       @keyboard = new LDFW.Keyboard
 
-      @speed = new LDFW.Vector2 500, 0
-      @position = new LDFW.Vector2
-      @velocity = new LDFW.Vector2 0, 100
-      @jumpForce = 700
-
-      @onGround = false
+      @width = 32
+      @height = 64
 
     update: (delta) ->
+      super
+
       @_handleKeyboard()
 
-      gravityStep = @level.gravity.clone()
-      gravityStep.multiply delta
-
-      @velocity.add gravityStep
-
-      velocityStep = @velocity.clone()
-      velocityStep.multiply delta
-
-      @position.add velocityStep
-
-      if @position.y >= 400
-        @position.y = 400
-        @velocity.y = 0
-
-        @onGround = true
-      else
-        @onGround = false
-
     _handleKeyboard: ->
-      moveLeft = @keyboard.leftPressed()
-      moveRight = @keyboard.rightPressed()
-      jump = @keyboard.upPressed()
+      moveLeft = @keyboard.pressed @keyboard.Keys.LEFT
+      moveRight = @keyboard.pressed @keyboard.Keys.RIGHT
+      jump = @keyboard.pressed @keyboard.Keys.UP
+      throwPackage = @keyboard.pressed @keyboard.Keys.SPACE
 
       if moveLeft
         @velocity.x = -@speed.x
@@ -49,5 +32,10 @@ define (require, exports, module) ->
 
       if jump and @onGround
         @velocity.y = -@jumpForce
+
+      if throwPackage and @package.attachedMob is this
+        @package.detach()
+        @package.velocity.set @velocity
+        @package.velocity.y -= @package.jumpForce
 
   module.exports = Player
