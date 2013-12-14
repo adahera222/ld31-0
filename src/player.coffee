@@ -14,14 +14,7 @@ define (require, exports, module) ->
       super
 
       @_handleKeyboard()
-
-      maxX = @level.scroll.x + @app.getWidth() - @game.scrollPadding * @app.getWidth()
-      if @position.x > maxX
-        @level.scroll.x +=  @position.x - maxX
-
-      minX = @level.scroll.x + @game.scrollPadding * @app.getWidth()
-      if @position.x < minX
-        @level.scroll.x -= minX - @position.x
+      @_handleLevelScrolling()
 
     _handleKeyboard: ->
       moveLeft = @keyboard.pressed @keyboard.Keys.LEFT
@@ -73,6 +66,20 @@ define (require, exports, module) ->
               @package.velocity.x = Math.min @package.velocity.x, -@minimumThrowingVelocity
             else
               @package.velocity.x = @direction * @minimumThrowingVelocity
+
+    _handleLevelScrolling: ->
+      maxX = @level.scroll.x + @app.getWidth() - @game.horizontalScrollPadding * @app.getWidth()
+      if @position.x > maxX
+        @level.scroll.x +=  @position.x - maxX
+
+      minX = @level.scroll.x + @game.horizontalScrollPadding * @app.getWidth()
+      if @position.x < minX
+        @level.scroll.x -= minX - @position.x
+
+      scrollPadding = @game.verticalScrollPadding * @app.getHeight()
+      minY = scrollPadding
+      if @position.y < minY
+        @level.scroll.y = @position.y - scrollPadding
 
     droppedPackage: ->
       @lastPackageInteraction = Date.now()

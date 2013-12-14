@@ -36,7 +36,7 @@ define (require, exports, module) ->
       barsCount = Math.ceil @app.getHeight() / barSpaceHeight
 
       context.fillStyle = "rgba(255, 255, 255, 0.3)"
-      for i in [0...barsCount]
+      for i in [-1...barsCount]
         context.fillRect(
           0,
           -offset + (i + 0.5) * barSpaceHeight,
@@ -64,7 +64,9 @@ define (require, exports, module) ->
       spritesCount = Math.ceil @app.getWidth() / spriteWidth
 
       for i in [-1..spritesCount]
-        @floorSprite.draw context, -offset + spriteWidth * i, @app.getHeight() - @floorSprite.getHeight()
+        @floorSprite.draw context,
+          -offset + spriteWidth * i,
+          @app.getHeight() - @floorSprite.getHeight() - @level.scroll.y
 
     _drawPlatforms: (context) ->
       context.fillStyle = "green"
@@ -76,7 +78,7 @@ define (require, exports, module) ->
 
         @platformActor.draw context,
           position.x - @level.scroll.x,
-          @app.getHeight() - position.y,
+          @app.getHeight() - position.y - @level.scroll.y,
           platformWidth
 
     _drawLadders: (context) ->
@@ -88,7 +90,7 @@ define (require, exports, module) ->
 
         @ladderActor.draw context,
           position.x - @level.scroll.x,
-          @app.getHeight() - position.y - ladderHeight,
+          @app.getHeight() - position.y - ladderHeight - @level.scroll.y,
 
 
   module.exports = LevelActor

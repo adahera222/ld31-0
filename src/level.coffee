@@ -35,7 +35,7 @@ define (require, exports, module) ->
         height: 7
       }
 
-    update: -> return
+    update: -> debug
 
     isMobTouchingLadder: (mob) ->
       for ladder in @ladders

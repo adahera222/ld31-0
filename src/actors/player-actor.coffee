@@ -39,7 +39,7 @@ define (require, exports, module) ->
       level = @game.level
 
       dx = @position.x - level.scroll.x
-      dy = @position.y - @height
+      dy = @position.y - @height - level.scroll.y
 
       mirrored = @player.direction is -1
 

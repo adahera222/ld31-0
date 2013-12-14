@@ -34,7 +34,7 @@ define (require, exports, module) ->
       level = @game.level
 
       dx = @position.x + 4 - level.scroll.x
-      dy = @position.y - @height
+      dy = @position.y - @height - level.scroll.y
 
       @sprite.draw context, dx, dy
 
