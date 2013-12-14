@@ -3,30 +3,27 @@ define (require, exports, module) ->
    * Module dependencies
   ###
   LDFW = require "ldfw"
-  PlayerActor = require "../actors/player-actor"
-  CloudsActor = require "../actors/clouds-actor"
+  PlayerActor = require "actors/player-actor"
 
   ###
    * GameStage definition
   ###
   class GameStage extends LDFW.Stage
-    constructor: ->
-      super
+    constructor: (@app, @game) ->
+      super @game
 
-      @cloudsActor = new CloudsActor @game
-      @addActor @cloudsActor
-
-      @playerActor = new PlayerActor @game
+      @playerActor = new PlayerActor @app, @game
       @addActor @playerActor
 
-      mapJSON = @game.preloader.get "assets/tm-bottom.json"
-      mapImage = @game.preloader.get "assets/tiles.png"
-      @bottomTileMap = new LDFW.TileMap @game, mapJSON, mapImage
-
     draw: (context) ->
-      @bottomTileMap.draw context
-
       super
+
+      {width, height} = context.canvas
+
+      context.fillStyle = "#040321"
+      context.fillRect 0, 0, width, height
+
+      @playerActor.draw context
 
   ###
    * Expose GameStage

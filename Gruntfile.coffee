@@ -24,7 +24,7 @@ module.exports = (grunt) ->
     watch:
       dev:
         files: ["src/**/*.coffee"]
-        tasks: ["newer:coffee"]
+        tasks: ["coffee", "notify:compiled"]
       assets:
         files: ["assets/sprites/**/*"]
         tasks: ["exec:build_sprites"]
@@ -32,10 +32,17 @@ module.exports = (grunt) ->
         files: ["assets/tiles/**/*"]
         tasks: ["exec:build_tiles"]
 
+    notify:
+      compiled:
+        options:
+          title: "Compiled"
+          message: "All assets have been compiled."
+
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-contrib-connect"
   grunt.loadNpmTasks "grunt-exec"
   grunt.loadNpmTasks "grunt-newer"
+  grunt.loadNpmTasks "grunt-notify"
 
-  grunt.registerTask "default", ["coffee", "exec:build_sprites", "exec:build_tiles", "connect", "watch"]
+  grunt.registerTask "default", ["coffee", "connect", "watch"]
