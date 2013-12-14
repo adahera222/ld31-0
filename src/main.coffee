@@ -14,4 +14,3 @@ define (require, exports, module) ->
 
   $ ->
     window.game = new Game $("#game")
-    game.run()

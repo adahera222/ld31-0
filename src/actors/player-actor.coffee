@@ -8,22 +8,49 @@ define (require, exports, module) ->
     constructor: (@app, @game) ->
       super @game
 
-      @player = @game.player
+      {@spriteSheet} = @app
+
+      @holdingIdleSprite = @spriteSheet.createSprite "player/holding-idle.png"
+      @holdingRunningSprite = @spriteSheet.createAnimSprite "player/holding-running.png", 2, 0.05
+
+      @idleSprite = @spriteSheet.createSprite "player/idle.png"
+      @runningSprite = @spriteSheet.createAnimSprite "player/run.png", 2, 0.05
+
+      {@player, @package} = @game
       @dataObject = @player
 
-      @width = 32
-      @height = 64
+      @width = @holdingIdleSprite.getWidth()
+      @height = @holdingIdleSprite.getHeight()
 
       @player.width = @width
       @player.height = @height
 
-    update: ->
+    update: (delta) ->
       super
       @position.set @player.position
 
+      @holdingRunningSprite.update delta
+      @runningSprite.update delta
+
     draw: (context) ->
-      context.fillStyle = "red"
-      context.fillRect @position.x, @position.y - @height, @width, @height
+      dx = @position.x
+      dy = @position.y - @height
+
+      mirrored = @player.direction is -1
+
+      sprite = @idleSprite
+      if @player.velocity.x isnt 0
+        if @package.attachedMob is @player
+          sprite = @holdingRunningSprite
+        else
+          sprite = @runningSprite
+      else
+        if @package.attachedMob is @player
+          sprite = @holdingIdleSprite
+        else
+          sprite = @idleSprite
+
+      sprite.draw context, dx, dy, mirrored
 
     intersectsWith: (actor) ->
       return not (actor.position.x > @position.x + @width or

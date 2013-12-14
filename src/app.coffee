@@ -12,7 +12,22 @@ define (require, exports, module) ->
     constructor: ->
       super
 
-      @screen = new GameScreen this
+      @preloader = new LDFW.Preloader this, [
+        "assets/sprites.png",
+        "assets/sprites.json"
+      ]
+      @preloader.on "done", =>
+
+        atlasPNG = @preloader.get "assets/sprites.png"
+        atlasJSON = @preloader.get "assets/sprites.json"
+
+        @spriteSheet = new LDFW.TextureAtlas atlasJSON.frames, atlasPNG
+
+        @screen = new GameScreen this
+
+        @run()
+
+      @preloader.load()
 
     draw: (context) ->
       super

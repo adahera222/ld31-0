@@ -18,7 +18,7 @@ define (require, exports, module) ->
     update: (delta) ->
       if @attachedMob?
         @position.set @attachedMob.position
-        @position.y -= 64
+        @position.y -= @attachedMob.height
       else
         super
 

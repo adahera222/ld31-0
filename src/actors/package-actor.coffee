@@ -9,10 +9,14 @@ define (require, exports, module) ->
     constructor: (@app, @game) ->
       super @game
 
-      {@player, @package} = @game
+      {@package} = @game
 
-      @width = 32
-      @height = 32
+      {@spriteSheet} = @app
+      @sprite = @spriteSheet.createSprite "package.png"
+      @spriteBack = @spriteSheet.createSprite "package-back.png"
+
+      @width = @sprite.getWidth()
+      @height = @sprite.getHeight()
 
       @package.width = @width
       @package.height = @height
@@ -27,7 +31,11 @@ define (require, exports, module) ->
           @package.attachTo obj
 
     draw: (context) ->
-      context.fillStyle = "blue"
-      context.fillRect @position.x, @position.y - @height, @width, @height
+      dx = @position.x + 4
+      dy = @position.y - @height
+      mirrored = @package.attachedMob?.direction is -1
+
+      sprite = if mirrored then @spriteBack else @sprite
+      sprite.draw context, dx, dy
 
   module.exports = PackageActor

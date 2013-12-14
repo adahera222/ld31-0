@@ -18,6 +18,10 @@ define (require, exports, module) ->
         position: new LDFW.Vector2 10, 14
         width: 8
       }
+      @platforms.push new Platform @app, @game, {
+        position: new LDFW.Vector2 20, 18
+        width: 8
+      }
 
       @ladders.push new Ladder @app, @game, {
         position: new LDFW.Vector2 9, 0

@@ -45,4 +45,4 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-newer"
   grunt.loadNpmTasks "grunt-notify"
 
-  grunt.registerTask "default", ["coffee", "connect", "watch"]
+  grunt.registerTask "default", ["coffee", "exec:build_sprites", "connect", "watch"]
