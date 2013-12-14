@@ -37,7 +37,7 @@ define (require, exports, module) ->
 
       {width, height} = context.canvas
 
-      context.fillStyle = "#040321"
+      context.fillStyle = "#73a7d0"
       context.fillRect 0, 0, width, height
 
       @levelActor.draw context

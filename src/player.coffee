@@ -6,7 +6,7 @@ define (require, exports, module) ->
     constructor: (@app, @game) ->
       super
 
-      {@package} = @game
+      {@package, @level} = @game
       @keyboard = new LDFW.Keyboard
       @minimumThrowingVelocity = 300
 
@@ -14,6 +14,14 @@ define (require, exports, module) ->
       super
 
       @_handleKeyboard()
+
+      maxX = @level.scroll.x + @app.getWidth() - @game.scrollPadding * @app.getWidth()
+      if @position.x > maxX
+        @level.scroll.x +=  @position.x - maxX
+
+      minX = @level.scroll.x + @game.scrollPadding * @app.getWidth()
+      if @position.x < minX
+        @level.scroll.x -= minX - @position.x
 
     _handleKeyboard: ->
       moveLeft = @keyboard.pressed @keyboard.Keys.LEFT

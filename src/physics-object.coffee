@@ -7,7 +7,7 @@ define (require, exports, module) ->
 
       @position = new LDFW.Vector2
       @velocity = new LDFW.Vector2 0, 100
-      @jumpForce = 1500
+      @jumpForce = 1200
 
       @direction = 1
 

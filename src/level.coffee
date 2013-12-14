@@ -4,11 +4,14 @@ define (require, exports, module) ->
   Ladder = require "level/ladder"
 
   class Level
-    GRID_SIZE: 32
+    @GRID_SIZE: 20
+    floorHeight: 16
     constructor: (@app, @game) ->
       @gravity = new LDFW.Vector2 0, 5000
       @platforms = []
       @ladders = []
+
+      @scroll = new LDFW.Vector2
 
       @platforms.push new Platform @app, @game, {
         position: new LDFW.Vector2 4, 7
@@ -32,13 +35,15 @@ define (require, exports, module) ->
         height: 7
       }
 
+    update: -> return
+
     isMobTouchingLadder: (mob) ->
       for ladder in @ladders
         ladderPosition = ladder.position
           .clone()
-          .multiply @GRID_SIZE
-        ladderHeight = ladder.height * @GRID_SIZE
-        ladderWidth = @GRID_SIZE
+          .multiply Level.GRID_SIZE
+        ladderHeight = ladder.height * Level.GRID_SIZE
+        ladderWidth = ladder.width
 
         # Horizontal check
         if mob.position.x + mob.width > ladderPosition.x and
@@ -62,15 +67,15 @@ define (require, exports, module) ->
           object: null
         y:
           min: 0
-          max: @app.getHeight()
+          max: @app.getHeight() - @floorHeight
           object: null
 
       # Check for platform collisions
       for platform in @platforms
         platformPosition = platform.position
           .clone()
-          .multiply @GRID_SIZE
-        platformWidth = platform.width * @GRID_SIZE
+          .multiply Level.GRID_SIZE
+        platformWidth = platform.width * Level.GRID_SIZE
 
         # Horizontal check
         if obj.position.x + obj.width > platformPosition.x and

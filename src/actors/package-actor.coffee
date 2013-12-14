@@ -31,7 +31,9 @@ define (require, exports, module) ->
           @package.attachTo obj
 
     draw: (context) ->
-      dx = @position.x + 4
+      level = @game.level
+
+      dx = @position.x + 4 - level.scroll.x
       dy = @position.y - @height
       mirrored = @package.attachedMob?.direction is -1
 

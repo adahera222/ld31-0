@@ -36,7 +36,9 @@ define (require, exports, module) ->
       @offgroundSprite.update delta
 
     draw: (context) ->
-      dx = @position.x
+      level = @game.level
+
+      dx = @position.x - level.scroll.x
       dy = @position.y - @height
 
       mirrored = @player.direction is -1
