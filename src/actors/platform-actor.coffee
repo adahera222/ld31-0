@@ -17,7 +17,6 @@ define (require, exports, module) ->
       spritesCount = Math.ceil width / spriteWidth
 
       for i in [0...spritesCount]
-        restWidth = width - (width - (i + 1) * spriteWidth)
         restWidth = Math.min spriteWidth, spriteWidth + (width - (i + 1) * spriteWidth)
 
         @sprite.draw context, dx + i * spriteWidth, dy, false, {

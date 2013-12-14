@@ -13,7 +13,6 @@ define (require, exports, module) ->
 
       {@spriteSheet} = @app
       @sprite = @spriteSheet.createSprite "package.png"
-      @spriteBack = @spriteSheet.createSprite "package-back.png"
 
       @width = @sprite.getWidth()
       @height = @sprite.getHeight()
@@ -35,9 +34,7 @@ define (require, exports, module) ->
 
       dx = @position.x + 4 - level.scroll.x
       dy = @position.y - @height
-      mirrored = @package.attachedMob?.direction is -1
 
-      sprite = if mirrored then @spriteBack else @sprite
-      sprite.draw context, dx, dy
+      @sprite.draw context, dx, dy
 
   module.exports = PackageActor

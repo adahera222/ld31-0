@@ -21,9 +21,42 @@ define (require, exports, module) ->
       @floorSprite = @spriteSheet.createSprite "world/floor.png"
 
     draw: (context) ->
+      @_drawBackground context
       @_drawFloor context
       @_drawPlatforms context
       @_drawLadders context
+
+    _drawBackground: (context) ->
+      @_drawVerticalBars context
+      @_drawHorizontalBars context
+
+    _drawVerticalBars: (context) ->
+      barSpaceHeight = 140
+      offset = @level.scroll.y % barSpaceHeight
+      barsCount = Math.ceil @app.getHeight() / barSpaceHeight
+
+      context.fillStyle = "rgba(255, 255, 255, 0.3)"
+      for i in [0...barsCount]
+        context.fillRect(
+          0,
+          -offset + (i + 0.5) * barSpaceHeight,
+          @app.getWidth(),
+          4
+        )
+
+    _drawHorizontalBars: (context) ->
+      barSpaceWidth = 130
+      offset = @level.scroll.x % barSpaceWidth
+      barsCount = Math.ceil @app.getWidth() / barSpaceWidth
+
+      context.fillStyle = "#dadada"
+      for i in [-1..barsCount]
+        context.fillRect(
+          -offset + (i + 0.5) * barSpaceWidth,
+          0,
+          10,
+          @app.getHeight()
+        )
 
     _drawFloor: (context) ->
       spriteWidth = @floorSprite.getWidth()

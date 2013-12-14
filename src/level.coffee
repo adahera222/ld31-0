@@ -17,14 +17,14 @@ define (require, exports, module) ->
         position: new LDFW.Vector2 4, 10
         width: 13
       }
-      # @platforms.push new Platform @app, @game, {
-      #   position: new LDFW.Vector2 10, 17
-      #   width: 8
-      # }
-      # @platforms.push new Platform @app, @game, {
-      #   position: new LDFW.Vector2 20, 21
-      #   width: 8
-      # }
+      @platforms.push new Platform @app, @game, {
+        position: new LDFW.Vector2 10, 17
+        width: 8
+      }
+      @platforms.push new Platform @app, @game, {
+        position: new LDFW.Vector2 20, 21
+        width: 8
+      }
 
       @ladders.push new Ladder @app, @game, {
         position: new LDFW.Vector2 9, 3
