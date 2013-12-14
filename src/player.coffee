@@ -57,11 +57,10 @@ define (require, exports, module) ->
       if moveUp and @onGround and not @onLadder
         @velocity.y = -@jumpForce
 
-
       if throwPackage and
         @package.attachedMob is this and
           @canInteractWithPackage()
-            @lastPackageInteraction = Date.now()
+            @droppedPackage()
 
             @package.detach()
             @package.velocity.set @velocity
@@ -74,5 +73,11 @@ define (require, exports, module) ->
               @package.velocity.x = Math.min @package.velocity.x, -@minimumThrowingVelocity
             else
               @package.velocity.x = @direction * @minimumThrowingVelocity
+
+    droppedPackage: ->
+      @lastPackageInteraction = Date.now()
+
+    pickedPackage: ->
+      @droppedPackage()
 
   module.exports = Player

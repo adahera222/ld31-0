@@ -3,7 +3,7 @@ define (require, exports, module) ->
   PhysicsObject = require "physics-object"
 
   class Mob extends PhysicsObject
-    minPackageInteractionDelay: 500
+    minPackageInteractionDelay: 300
     constructor: ->
       super
 

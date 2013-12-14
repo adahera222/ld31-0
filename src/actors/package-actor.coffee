@@ -28,6 +28,7 @@ define (require, exports, module) ->
       if obj instanceof Mob and
         obj.canInteractWithPackage()
           @package.attachTo obj
+          obj.pickedPackage()
 
     draw: (context) ->
       level = @game.level
