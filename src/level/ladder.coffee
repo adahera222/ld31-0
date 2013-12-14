@@ -1,8 +1,8 @@
 define (require, exports, module) ->
   LDFW = require "ldfw"
 
-  class Platform
+  class Ladder
     constructor: (@app, @game, options) ->
-      {@width, @position} = options
+      {@height, @position} = options
 
-  module.exports = Platform
+  module.exports = Ladder

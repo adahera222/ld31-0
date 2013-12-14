@@ -22,8 +22,9 @@ define (require, exports, module) ->
       @position.set @package.position
 
     onIntersect: (obj) ->
-      if obj instanceof Mob
-        @package.attachTo obj
+      if obj instanceof Mob and
+        obj.canInteractWithPackage()
+          @package.attachTo obj
 
     draw: (context) ->
       context.fillStyle = "blue"

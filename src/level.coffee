@@ -1,16 +1,22 @@
 define (require, exports, module) ->
   LDFW = require "ldfw"
   Platform = require "level/platform"
+  Ladder = require "level/ladder"
 
   class Level
     GRID_SIZE: 32
     constructor: (@app, @game) ->
       @gravity = new LDFW.Vector2 0, 5000
       @platforms = []
+      @ladders = []
 
       @platforms.push new Platform @app, @game, {
-        position: new LDFW.Vector2 5, 10
+        position: new LDFW.Vector2 4, 7
         width: 8
+      }
+      @ladders.push new Ladder @app, @game, {
+        position: new LDFW.Vector2 9, 0
+        height: 7
       }
 
     update: (delta) ->
@@ -37,9 +43,11 @@ define (require, exports, module) ->
         # Horizontal check
         if obj.position.x + obj.width > platformPosition.x and
           obj.position.x < platformPosition.x + platformWidth
+
             # Vertical check
-            if obj.position.y <= platformPosition.y <= boundaries.y.max
-              boundaries.y.max = platformPosition.y
+            platformY = (@app.getHeight() - platformPosition.y)
+            if obj.position.y <= platformY <= boundaries.y.max
+              boundaries.y.max = platformY
 
       return boundaries
 

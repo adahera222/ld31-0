@@ -33,19 +33,21 @@ define (require, exports, module) ->
       if jump and @onGround
         @velocity.y = -@jumpForce
 
-      if throwPackage and @package.attachedMob is this
-        @package.detach()
-        @package.velocity.set @velocity
-        @package.velocity.y -= @package.jumpForce
+      if throwPackage and
+        @package.attachedMob is this and
+          @canInteractWithPackage()
+            @lastPackageInteraction = Date.now()
 
-        # Minimum X velocity (so we don't throw it straight upwards)
-        if @package.velocity.x > 0
-          @package.velocity.x = Math.max @package.velocity.x, @minimumThrowingVelocity
-        else if @package.velocity.x < 0
-          @package.velocity.x = Math.min @package.velocity.x, -@minimumThrowingVelocity
-        else
-          @package.velocity.x = @direction * @minimumThrowingVelocity
+            @package.detach()
+            @package.velocity.set @velocity
+            @package.velocity.y -= @package.jumpForce
 
-
+            # Minimum X velocity (so we don't throw it straight upwards)
+            if @package.velocity.x > 0
+              @package.velocity.x = Math.max @package.velocity.x, @minimumThrowingVelocity
+            else if @package.velocity.x < 0
+              @package.velocity.x = Math.min @package.velocity.x, -@minimumThrowingVelocity
+            else
+              @package.velocity.x = @direction * @minimumThrowingVelocity
 
   module.exports = Player

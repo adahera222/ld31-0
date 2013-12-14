@@ -28,7 +28,7 @@ define (require, exports, module) ->
     intersectsWith: (actor) ->
       return not (actor.position.x > @position.x + @width or
         actor.position.x + actor.width < @position.x or
-        actor.position.y > @position.y + @height or
-        actor.position.y + actor.height < @position.y)
+        actor.position.y > @position.y or
+        actor.position.y + actor.height < @position.y - @height)
 
   module.exports = PlayerActor

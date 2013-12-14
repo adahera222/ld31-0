@@ -3,9 +3,14 @@ define (require, exports, module) ->
   PhysicsObject = require "physics-object"
 
   class Mob extends PhysicsObject
+    minPackageInteractionDelay: 500
     constructor: ->
       super
 
       {@package} = @game
+      @lastPackageInteraction = Date.now()
 
-  module.exports = PhysicsObject
+    canInteractWithPackage: ->
+      return Date.now() - @lastPackageInteraction > @minPackageInteractionDelay
+
+  module.exports = Mob
