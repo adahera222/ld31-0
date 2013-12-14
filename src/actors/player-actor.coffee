@@ -14,6 +14,9 @@ define (require, exports, module) ->
       @width = 32
       @height = 64
 
+      @player.width = @width
+      @player.height = @height
+
     update: ->
       super
       @position.set @player.position
