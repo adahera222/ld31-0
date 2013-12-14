@@ -5,6 +5,7 @@ define (require, exports, module) ->
   LDFW = require "ldfw"
   Level = require "level"
   LadderActor = require "actors/ladder-actor"
+  PlatformActor = require "actors/platform-actor"
 
   class LevelActor extends LDFW.Actor
     GRID_SIZE: Level.GRID_SIZE
@@ -13,7 +14,9 @@ define (require, exports, module) ->
 
       {@level} = @game
       {@spriteSheet} = @app
+
       @ladderActor = new LadderActor @app, @game
+      @platformActor = new PlatformActor @app, @game
 
       @floorSprite = @spriteSheet.createSprite "world/floor.png"
 
@@ -38,12 +41,10 @@ define (require, exports, module) ->
           .multiply @GRID_SIZE
         platformWidth = platform.width * @GRID_SIZE
 
-        context.fillRect(
+        @platformActor.draw context,
           position.x - @level.scroll.x,
           @app.getHeight() - position.y,
-          platformWidth,
-          @GRID_SIZE
-        )
+          platformWidth
 
     _drawLadders: (context) ->
       for ladder in @level.ladders

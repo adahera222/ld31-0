@@ -10,7 +10,7 @@ define (require, exports, module) ->
 
       {@spriteSheet} = @app
 
-      @sprite = @spriteSheet.createSprite "ladder.png"
+      @sprite = @spriteSheet.createSprite "world/ladder.png"
 
     draw: (context, dx, dy) ->
       @sprite.draw context, dx, dy
