@@ -38,8 +38,9 @@ define (require, exports, module) ->
         @ignoreGravity = true
       else unless touchingLadder
         @ignoreGravity = false
-      else
+      else if touchingLadder
         @velocity.y = 0
+        @ignoreGravity = true
 
       if throwPackage and
         @package.attachedMob is this and
