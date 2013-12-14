@@ -12,11 +12,23 @@ define (require, exports, module) ->
       super @game
 
       {@level} = @game
+      {@spriteSheet} = @app
       @ladderActor = new LadderActor @app, @game
 
+      @floorSprite = @spriteSheet.createSprite "world/floor.png"
+
     draw: (context) ->
+      @_drawFloor context
       @_drawPlatforms context
       @_drawLadders context
+
+    _drawFloor: (context) ->
+      spriteWidth = @floorSprite.getWidth()
+      offset = @level.scroll.x % spriteWidth
+      spritesCount = Math.ceil @app.getWidth() / spriteWidth
+
+      for i in [-1..spritesCount]
+        @floorSprite.draw context, -offset + spriteWidth * i, @app.getHeight() - @floorSprite.getHeight()
 
     _drawPlatforms: (context) ->
       context.fillStyle = "green"

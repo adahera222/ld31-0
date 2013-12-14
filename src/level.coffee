@@ -5,7 +5,7 @@ define (require, exports, module) ->
 
   class Level
     @GRID_SIZE: 20
-    floorHeight: 16
+    floorHeight: 40
     constructor: (@app, @game) ->
       @gravity = new LDFW.Vector2 0, 5000
       @platforms = []
@@ -14,24 +14,24 @@ define (require, exports, module) ->
       @scroll = new LDFW.Vector2
 
       @platforms.push new Platform @app, @game, {
-        position: new LDFW.Vector2 4, 7
+        position: new LDFW.Vector2 4, 10
         width: 15
       }
       @platforms.push new Platform @app, @game, {
-        position: new LDFW.Vector2 10, 14
+        position: new LDFW.Vector2 10, 17
         width: 8
       }
       @platforms.push new Platform @app, @game, {
-        position: new LDFW.Vector2 20, 18
+        position: new LDFW.Vector2 20, 21
         width: 8
       }
 
       @ladders.push new Ladder @app, @game, {
-        position: new LDFW.Vector2 9, 0
+        position: new LDFW.Vector2 9, 3
         height: 7
       }
       @ladders.push new Ladder @app, @game, {
-        position: new LDFW.Vector2 14, 7
+        position: new LDFW.Vector2 14, 10
         height: 7
       }
 
