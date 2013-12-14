@@ -1,22 +1,21 @@
 define (require, exports, module) ->
   LDFW = require "ldfw"
-  Mob = require "mob"
+  PhysicsObject = require "physics-object"
 
-  class Package extends Mob
+  class Package extends PhysicsObject
     constructor: (@app, @game) ->
       super
 
       @attachedMob = null
       @jumpForce = 700
 
-    attachTo: (@attachedMob) ->
-    detach: ->
-      @attachedMob = null
+    attachTo: (@attachedMob) -> return
+    detach: -> @attachedMob = null
 
     update: (delta) ->
       if @attachedMob?
         @position.set @attachedMob.position
-        @position.y -= @attachedMob.height
+        @position.y -= 64
       else
         super
 

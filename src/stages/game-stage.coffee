@@ -19,6 +19,15 @@ define (require, exports, module) ->
       @packageActor = new PackageActor @app, @game
       @addActor @packageActor
 
+      @mobActors = [@playerActor]
+
+    update: (delta) ->
+      super
+      unless @game.package.attachedMob?
+        for actor in @mobActors
+          if actor.intersectsWith @packageActor
+            @packageActor.onIntersect actor.dataObject
+
     draw: (context) ->
       super
 

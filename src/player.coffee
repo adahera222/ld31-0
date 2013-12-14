@@ -8,9 +8,7 @@ define (require, exports, module) ->
 
       {@package} = @game
       @keyboard = new LDFW.Keyboard
-
-      @width = 32
-      @height = 64
+      @minimumThrowingVelocity = 300
 
     update: (delta) ->
       super
@@ -25,8 +23,10 @@ define (require, exports, module) ->
 
       if moveLeft
         @velocity.x = -@speed.x
+        @direction = -1
       else if moveRight
         @velocity.x = @speed.x
+        @direction = 1
       else
         @velocity.x = 0
 
@@ -37,5 +37,15 @@ define (require, exports, module) ->
         @package.detach()
         @package.velocity.set @velocity
         @package.velocity.y -= @package.jumpForce
+
+        # Minimum X velocity (so we don't throw it straight upwards)
+        if @package.velocity.x > 0
+          @package.velocity.x = Math.max @package.velocity.x, @minimumThrowingVelocity
+        else if @package.velocity.x < 0
+          @package.velocity.x = Math.min @package.velocity.x, -@minimumThrowingVelocity
+        else
+          @package.velocity.x = @direction * @minimumThrowingVelocity
+
+
 
   module.exports = Player

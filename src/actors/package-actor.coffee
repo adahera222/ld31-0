@@ -3,6 +3,7 @@ define (require, exports, module) ->
    * Module dependencies
   ###
   LDFW = require "ldfw"
+  Mob = require "mob"
 
   class PackageActor extends LDFW.Actor
     constructor: (@app, @game) ->
@@ -16,6 +17,10 @@ define (require, exports, module) ->
     update: ->
       super
       @position.set @package.position
+
+    onIntersect: (obj) ->
+      if obj instanceof Mob
+        @package.attachTo obj
 
     draw: (context) ->
       context.fillStyle = "blue"
