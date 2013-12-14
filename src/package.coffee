@@ -7,7 +7,7 @@ define (require, exports, module) ->
       super
 
       @attachedMob = null
-      @jumpForce = 700
+      @jumpForce = 300
 
     attachTo: (@attachedMob) -> return
     detach: -> @attachedMob = null

@@ -3,6 +3,7 @@ define (require, exports, module) ->
    * Module dependencies
   ###
   LDFW = require "ldfw"
+  LevelActor = require "actors/level-actor"
   PlayerActor = require "actors/player-actor"
   PackageActor = require "actors/package-actor"
 
@@ -12,6 +13,9 @@ define (require, exports, module) ->
   class GameStage extends LDFW.Stage
     constructor: (@app, @game) ->
       super @game
+
+      @levelActor = new LevelActor @app, @game
+      @addActor @levelActor
 
       @playerActor = new PlayerActor @app, @game
       @addActor @playerActor
@@ -36,6 +40,7 @@ define (require, exports, module) ->
       context.fillStyle = "#040321"
       context.fillRect 0, 0, width, height
 
+      @levelActor.draw context
       @playerActor.draw context
       @packageActor.draw context
 
