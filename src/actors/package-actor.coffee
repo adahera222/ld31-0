@@ -14,6 +14,9 @@ define (require, exports, module) ->
       @width = 32
       @height = 32
 
+      @package.width = @width
+      @package.height = @height
+
     update: ->
       super
       @position.set @package.position

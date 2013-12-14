@@ -10,6 +10,8 @@ define (require, exports, module) ->
       @velocity = new LDFW.Vector2 0, 100
       @jumpForce = 1500
 
+      @direction = 1
+
       @width = 0
       @height = 0
 

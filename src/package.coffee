@@ -9,6 +9,9 @@ define (require, exports, module) ->
       @attachedMob = null
       @jumpForce = 300
 
+      @width = 0
+      @height = 0
+
     attachTo: (@attachedMob) -> return
     detach: -> @attachedMob = null
 
