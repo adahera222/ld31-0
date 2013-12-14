@@ -12,5 +12,12 @@ define (require, exports, module) ->
   $ = require "jquery"
   Game = require "./app"
 
+  window.debug = ->
+    text = arguments[0]
+    if arguments.length > 1
+      text = Array.prototype.slice.call(arguments).join " "
+
+    $("#debug").text text
+
   $ ->
     window.game = new Game $("#game")

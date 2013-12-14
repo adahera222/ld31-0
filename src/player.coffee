@@ -39,17 +39,24 @@ define (require, exports, module) ->
         @velocity.x = 0
 
       touchingLadder = @level.isMobTouchingLadder this
-      if moveUp and @onGround and not touchingLadder
-        @velocity.y = -@jumpForce
-      else unless @package.attachedMob is this
-        if moveUp and touchingLadder
+
+      if moveUp and touchingLadder and @package.attachedMob isnt this
+        @ignoreGravity = true
+        @onLadder = true
+
+      if @onLadder
+        if moveUp
           @velocity.y = -@speed.y
-          @ignoreGravity = true
-        else unless touchingLadder
-          @ignoreGravity = false
-        else if touchingLadder
+        else
           @velocity.y = 0
-          @ignoreGravity = true
+
+      if @onLadder and not touchingLadder
+        @ignoreGravity = false
+        @onLadder = false
+
+      if moveUp and @onGround and not @onLadder
+        @velocity.y = -@jumpForce
+
 
       if throwPackage and
         @package.attachedMob is this and

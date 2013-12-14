@@ -32,8 +32,8 @@ define (require, exports, module) ->
       @position.set @player.position
 
       @holdingRunningSprite.update delta
-      @runningSprite.update delta
-      @offgroundSprite.update delta
+      # @runningSprite.update delta
+      # @offgroundSprite.update delta
 
     draw: (context) ->
       level = @game.level

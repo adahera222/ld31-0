@@ -18,11 +18,24 @@
 
         border: 2px solid rgba(255,255,255,0.2);
       }
+
+      #debug {
+        background: black;
+        color: white;
+        font-size: 14px;
+        padding: 5px;
+        font-family: monospace;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
     </style>
   </head>
   <body>
     <div id="game">
       <canvas width="640" height="480"></canvas>
+      <div id="debug">DEBUG</div>
     </div>
 
     <script src="js/lib/requirejs/require.js" data-main="js/game/main.js"></script>

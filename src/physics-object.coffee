@@ -15,6 +15,7 @@ define (require, exports, module) ->
       @height = 0
 
       @onGround = false
+      @onLadder = false
       @ignoreGravity = false
 
     update: (delta) ->

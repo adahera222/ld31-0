@@ -43,17 +43,17 @@ define (require, exports, module) ->
           .clone()
           .multiply Level.GRID_SIZE
         ladderHeight = ladder.height * Level.GRID_SIZE
-        ladderWidth = ladder.width
+        ladderWidth = Level.GRID_SIZE * 2
 
         # Horizontal check
-        if mob.position.x + mob.width > ladderPosition.x and
-          mob.position.x < ladderPosition.x + ladderWidth
+        minCoverage = 0.3 * Level.GRID_SIZE
+        unless (mob.position.x + mob.width < ladderPosition.x + minCoverage or
+          mob.position.x > ladderPosition.x + ladderWidth - minCoverage)
 
             # Vertical check
-            ladderY = (@app.getHeight() - ladderPosition.y)
-            if mob.position.y > @app.getHeight() - ladderHeight - ladderPosition.y and
-              mob.position.y < ladderY
-
+            ladderY = (@app.getHeight() - ladderPosition.y - ladderHeight)
+            unless (mob.position.y <= ladderY or
+              mob.position.y - mob.height >= ladderY + ladderHeight)
                 intersection = true
                 return true
 
