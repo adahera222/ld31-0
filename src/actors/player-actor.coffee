@@ -16,6 +16,8 @@ define (require, exports, module) ->
       @idleSprite = @spriteSheet.createSprite "player/idle.png"
       @runningSprite = @spriteSheet.createAnimSprite "player/run.png", 2, 0.05
 
+      @offgroundSprite = @spriteSheet.createAnimSprite "player/offground.png", 3, 0.2
+
       {@player, @package} = @game
       @dataObject = @player
 
@@ -31,6 +33,7 @@ define (require, exports, module) ->
 
       @holdingRunningSprite.update delta
       @runningSprite.update delta
+      @offgroundSprite.update delta
 
     draw: (context) ->
       dx = @position.x
@@ -39,7 +42,10 @@ define (require, exports, module) ->
       mirrored = @player.direction is -1
 
       sprite = @idleSprite
-      if @player.velocity.x isnt 0
+      if not @player.onGround and
+        @package.attachedMob isnt @player
+          sprite = @offgroundSprite
+      else if @player.velocity.x isnt 0
         if @package.attachedMob is @player
           sprite = @holdingRunningSprite
         else
