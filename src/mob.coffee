@@ -20,6 +20,9 @@ define (require, exports, module) ->
       @health = 3
 
     lostPackage: ->
+      @stun()
+
+    stun: ->
       @stunned = true
       @stunStart = Date.now()
 
@@ -29,6 +32,7 @@ define (require, exports, module) ->
       if @stunned and
         Date.now() - @stunStart > @stunDuration
           @stunned = false
+          @blinking = false
 
     canPickPackage: ->
       @package.previousMob isnt this
@@ -42,6 +46,8 @@ define (require, exports, module) ->
       @health--
       @knockback.set 10, 5
       @knockbackXDirection = direction
+
+      @stun()
 
     _jump: ->
       if @onGround and not @onLadder

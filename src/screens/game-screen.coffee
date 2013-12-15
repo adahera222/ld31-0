@@ -17,6 +17,8 @@ define (require, exports, module) ->
       window.game = @game
       @gameStage = new GameStage @app, @game
 
+      @game.level.parse()
+
     ###
      * Update positions etc.
      * @param  {Number} delta Time passed since the last tick

@@ -12,6 +12,7 @@ define (require, exports, module) ->
       @_findPlatforms()
       @_findLadders()
       @_findExits()
+      @_findEnemies()
 
     _prepareCanvas: ->
       @canvas = document.createElement "canvas"
@@ -39,16 +40,17 @@ define (require, exports, module) ->
             imageData[index + 2]
           ]
 
-          if rgb[0] is 0 and rgb[1] is 0 and rgb[2] is 255
+          isPlatform = rgb[0] is 0 and rgb[1] is 0 and rgb[2] is 255
+          if isPlatform
             # Platform!
             platformWidth++
             unless onPlatform
               platformX = x
 
             onPlatform = true
-          else if onPlatform
+          if (not isPlatform and onPlatform) or (onPlatform and x is @canvas.width - 1)
             onPlatform = false
-            @level.addPlatform platformX, y, platformWidth
+            @level.addPlatform platformX, @canvas.height - y, platformWidth
             platformWidth = 0
 
     _findLadders: ->
@@ -86,5 +88,22 @@ define (require, exports, module) ->
           if rgb[0] is 255 and rgb[1] is 0 and rgb[2] is 0
             # Exit!
             @level.addExit x, y
+
+    _findEnemies: ->
+      imageData = @context.getImageData 0, 0, @canvas.width, @canvas.height
+      imageData = imageData.data
+
+      for y in [0...@canvas.height]
+        for x in [0...@canvas.width]
+          index = (@canvas.width * y + x) * 4
+
+          rgb = [
+            imageData[index],
+            imageData[index + 1],
+            imageData[index + 2]
+          ]
+
+          if rgb[0] is 255 and rgb[1] is 178 and rgb[2] is 0
+            @game.addEnemy x, y
 
   module.exports = LevelParser

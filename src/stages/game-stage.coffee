@@ -33,8 +33,6 @@ define (require, exports, module) ->
         @mobActors.push mobActor
         @addActor mobActor
 
-      @game.addEnemy()
-
     update: (delta) ->
       super
       packageObject = @packageActor.package

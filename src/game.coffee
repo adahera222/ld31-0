@@ -6,17 +6,19 @@ define (require, exports, module) ->
   EventEmitter = require "lib/eventemitter"
 
   class Game extends EventEmitter
-    horizontalScrollPadding: 0.2
-    verticalScrollPadding: 0.3
+    horizontalScrollPadding: 0.4
+    verticalScrollPadding: 0.5
     constructor: (@app) ->
+      @mobs = []
+
       @level = new Level @app, this, "level-0"
       @package = new Package @app, this
+
       @player = new Player @app, this
       @player.position.set 400, 100
+      @mobs.push @player
 
       @package.attachTo @player
-
-      @mobs = [@player]
 
     update: (delta) ->
       @level.update delta
@@ -26,10 +28,11 @@ define (require, exports, module) ->
 
       @package.update delta
 
-    addEnemy: ->
+    addEnemy: (x, y) ->
       enemy = new Enemy @app, this
-      enemy.position.set @player.position
-      enemy.position.x += 100
+      enemy.position.set x, y
+      enemy.position.multiply Level.GRID_SIZE
+      enemy.position.y = @app.getHeight() - enemy.position.y
 
       @mobs.push enemy
       @emit "enemy_added", enemy

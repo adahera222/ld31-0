@@ -22,8 +22,8 @@ define (require, exports, module) ->
       @height = 0
 
       @parser = new LevelParser @app, @game, this, @fileName
-      @parser.parse()
 
+    parse: -> @parser.parse()
     update: -> debug
 
     isMobTouchingLadder: (mob, specificLadder, fullyOnLadder = false) ->
@@ -95,7 +95,6 @@ define (require, exports, module) ->
       return false
 
     addPlatform: (x, y, width) ->
-      y = @height - y
       platform = new Platform @app, @game, this, {
         width: width,
         position: new LDFW.Vector2 x, y
