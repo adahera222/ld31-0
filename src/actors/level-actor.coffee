@@ -23,9 +23,11 @@ define (require, exports, module) ->
       @spawnActor = new SpawnActor @app, @game
 
       @floorSprite = @spriteSheet.createSprite "world/floor.png"
+      @wallSprite = @spriteSheet.createSprite "world/wall.png"
 
     draw: (context) ->
       @_drawBackground context
+      @_drawWall context
       @_drawFloor context
       @_drawPlatforms context
       @_drawLadders context
@@ -37,7 +39,7 @@ define (require, exports, module) ->
       @_drawHorizontalBars context
 
     _drawVerticalBars: (context) ->
-      barSpaceHeight = 140
+      barSpaceHeight = 160
       offset = @level.scroll.y % barSpaceHeight
       barsCount = Math.ceil @app.getHeight() / barSpaceHeight
 
@@ -73,6 +75,16 @@ define (require, exports, module) ->
         @floorSprite.draw context,
           -offset + spriteWidth * i,
           @app.getHeight() - @floorSprite.getHeight() - @level.scroll.y
+
+    _drawWall: (context) ->
+      spriteWidth = @wallSprite.getWidth()
+      offset = @level.scroll.x % spriteWidth
+      spritesCount = Math.ceil @app.getWidth() / spriteWidth
+
+      for i in [-1..spritesCount]
+        @wallSprite.draw context,
+          -offset + spriteWidth * i,
+          @app.getHeight() - @wallSprite.getHeight() - @level.scroll.y - @GRID_SIZE * 2
 
     _drawPlatforms: (context) ->
       context.fillStyle = "green"

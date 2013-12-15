@@ -160,7 +160,7 @@ define (require, exports, module) ->
 
       if distY < 0
         # Do we have a ladder on our platform?
-        ladderOnPlatform = @level.findLadderOnPlatform currentPlatform
+        ladderOnPlatform = @level.findClosestLadderOnPlatform currentPlatform, @position
         if ladderOnPlatform
           # Yes -> Use it
           @aiTargetLadder = ladderOnPlatform

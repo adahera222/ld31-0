@@ -87,12 +87,19 @@ define (require, exports, module) ->
     getRealFloorLevel: ->
       new LDFW.Vector2(0, @app.getHeight() - @floorHeight)
 
-    findLadderOnPlatform: (platform) ->
+    findClosestLadderOnPlatform: (platform, position) ->
+      filteredLadders = []
       for ladder in @ladders
         if ladder.position.y is (platform.position?.y or @floorHeight / Level.GRID_SIZE)
-          return ladder
+          filteredLadders.push ladder
 
-      return false
+      filteredLadders.sort (a, b) ->
+        distA = Math.abs(position.x - a.getRealPosition().x)
+        distB = Math.abs(position.x - b.getRealPosition().x)
+
+        return distA - distB
+
+      return filteredLadders[0]
 
     findPlatformAbove: (x, y) ->
       platforms = @platforms.slice()
