@@ -19,6 +19,7 @@ define (require, exports, module) ->
       @addActor @levelActor
 
       @playerActor = new PlayerActor @app, @game, @game.player
+      @game.player.actor = @playerActor
       @addActor @playerActor
 
       @packageActor = new PackageActor @app, @game
@@ -27,6 +28,8 @@ define (require, exports, module) ->
       @mobActors = [@playerActor]
       @game.on "enemy_added", (enemy) =>
         mobActor = new EnemyActor @app, @game, enemy
+        enemy.actor = mobActor
+
         @mobActors.push mobActor
         @addActor mobActor
 
@@ -34,11 +37,20 @@ define (require, exports, module) ->
 
     update: (delta) ->
       super
+      packageObject = @packageActor.package
       for mobActor in @mobActors
-        if (not game.package.attachedMob? and mobActor.intersectsWith @packageActor) or
-          (game.package.attachedMob is @game.player and mobActor.intersectsWith @playerActor)
-            packageObject = @packageActor.package
-            packageObject.onIntersect mobActor.dataObject
+        packageFree = !packageObject.attachedMob
+        intersectsWithPackage = mobActor.intersectsWith @packageActor
+
+        unless packageFree
+          intersectsWithPackageHolder = mobActor.intersectsWith packageObject.attachedMob.actor
+
+        pickPackage = ((packageFree and intersectsWithPackage) or
+          intersectsWithPackageHolder)
+
+        if pickPackage
+          packageObject = @packageActor.package
+          packageObject.onIntersect mobActor.dataObject
 
     draw: (context) ->
       super

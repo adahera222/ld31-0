@@ -53,21 +53,20 @@ define (require, exports, module) ->
         @_jump()
 
       if throwPackage and not @stunned and
-        @package.attachedMob is this and
-          @canInteractWithPackage()
-            @droppedPackage()
+        @package.attachedMob is this
+          @droppedPackage()
 
-            @package.detach()
-            @package.velocity.set @velocity
-            @package.velocity.y -= @package.jumpForce
+          @package.detach()
+          @package.velocity.set @velocity
+          @package.velocity.y -= @package.jumpForce
 
-            # Minimum X velocity (so we don't throw it straight upwards)
-            if @package.velocity.x > 0
-              @package.velocity.x = Math.max @package.velocity.x, @minimumThrowingVelocity
-            else if @package.velocity.x < 0
-              @package.velocity.x = Math.min @package.velocity.x, -@minimumThrowingVelocity
-            else
-              @package.velocity.x = @direction * @minimumThrowingVelocity
+          # Minimum X velocity (so we don't throw it straight upwards)
+          if @package.velocity.x > 0
+            @package.velocity.x = Math.max @package.velocity.x, @minimumThrowingVelocity
+          else if @package.velocity.x < 0
+            @package.velocity.x = Math.min @package.velocity.x, -@minimumThrowingVelocity
+          else
+            @package.velocity.x = @direction * @minimumThrowingVelocity
 
     # Todo: Move this to the level.
     _handleLevelScrolling: ->

@@ -13,19 +13,23 @@ define (require, exports, module) ->
       @width = 0
       @height = 0
 
-    attachTo: (@attachedMob) -> return
+      @lastAttachment = Date.now()
+
+    attachTo: (@attachedMob) ->
+      @lastAttachment = Date.now()
+
     detach: -> @attachedMob = null
 
     onIntersect: (obj) ->
       return if @attachedMob is obj
+      return if obj.stunned
 
-      if obj instanceof Mob and
-        obj.canInteractWithPackage()
-          lastAttached = @attachedMob
+      if obj instanceof Mob
+        lastAttached = @attachedMob
 
-          @attachTo obj
-          obj.pickedPackage()
-          lastAttached.lostPackage()
+        @attachTo obj
+        obj.pickedPackage()
+        lastAttached?.lostPackage()
 
     update: (delta) ->
       if @attachedMob?

@@ -3,14 +3,12 @@ define (require, exports, module) ->
   PhysicsObject = require "physics-object"
 
   class Mob extends PhysicsObject
-    minPackageInteractionDelay: 300
     stunDuration: 2000
     constructor: ->
       super
 
       {@package} = @game
       @speed = new LDFW.Vector2 500, 500
-      @lastPackageInteraction = Date.now()
 
       @stunned = false
       @stunStart = null
@@ -25,9 +23,6 @@ define (require, exports, module) ->
       if @stunned and
         Date.now() - @stunStart > @stunDuration
           @stunned = false
-
-    canInteractWithPackage: ->
-      return Date.now() - @lastPackageInteraction > @minPackageInteractionDelay
 
     _jump: ->
       if @onGround and not @onLadder
