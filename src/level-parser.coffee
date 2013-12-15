@@ -28,7 +28,7 @@ define (require, exports, module) ->
       imageData = imageData.data
 
       onPlatform = false
-      platformWidth = 0
+      platformWidth = 1
       platformX = 0
       for y in [0...@canvas.height]
         for x in [0...@canvas.width]
@@ -51,7 +51,7 @@ define (require, exports, module) ->
           if (not isPlatform and onPlatform) or (onPlatform and x is @canvas.width - 1)
             onPlatform = false
             @level.addPlatform platformX, @canvas.height - y, platformWidth
-            platformWidth = 0
+            platformWidth = 1
 
     _findLadders: ->
       imageData = @context.getImageData 0, 0, @canvas.width, @canvas.height

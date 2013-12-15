@@ -99,6 +99,7 @@ define (require, exports, module) ->
         width: width,
         position: new LDFW.Vector2 x, y
       }
+
       @platforms.push platform
 
     addLadder: (x, y) ->
