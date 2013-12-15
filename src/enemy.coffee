@@ -5,6 +5,7 @@ define (require, exports, module) ->
 
   class Enemy extends Mob
     interestDistance: 400
+    loseInterestDistance: 800
     constructor: (@app, @game) ->
       super
 
@@ -49,11 +50,26 @@ define (require, exports, module) ->
       # Add more logic here:
       #  - As soon as the object of interest is far
       #    away, lose interest in it
-      console.debug "Performing AI check"
-      @objectOfInterest = @_findObjectOfInterest()
-      if @objectOfInterest and @onGround
-        @following = true
+      ooiData = @_findObjectOfInterest()
+
+      # Gain interest
+      if not @objectOfInterest and
+        ooiData.distance < @interestDistance
+          @objectOfInterest = ooiData
+          @aiState = @_findAIState()
+          @following = true
+
+      # Lose interest
+      else if @objectOfInterest and
+        ooiData.distance > @loseInterestDistance
+          console.debug "Lost interest..."
+          @objectOfInterest = null
+          @_stopAIAction()
+          @following = false
+
+      else if @objectOfInterest and @onGround
         @aiState = @_findAIState()
+
 
     _findObjectOfInterest: ->
       if @package.attachedMob is @player
@@ -69,12 +85,7 @@ define (require, exports, module) ->
       distY = Math.pow(@position.y - platformPosition.y, 2)
       distance = Math.sqrt(distX + distY)
 
-      debug "AI Distance", distance
-
-      if distance < @interestDistance
-        return { object: obj, platform: platform }
-
-      return false
+      return { object: obj, platform: platform, distance: distance }
 
     _findAIState: ->
       floorPosition = @level.getRealFloorLevel()

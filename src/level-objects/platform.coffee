@@ -6,8 +6,11 @@ define (require, exports, module) ->
       {@width, @position} = options
 
     getRealPosition: ->
-      @position
+      realPosition = @position
         .clone()
         .multiply @level.constructor.GRID_SIZE # Level.GRID_SIZE didnt work...
+
+      realPosition.y = @app.getHeight() - realPosition.y
+      return realPosition
 
   module.exports = Platform
