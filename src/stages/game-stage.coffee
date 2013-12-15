@@ -8,6 +8,9 @@ define (require, exports, module) ->
   EnemyActor = require "actors/enemy-actor"
   PackageActor = require "actors/package-actor"
 
+  Player = require "player"
+  Mob = require "mob"
+
   ###
    * GameStage definition
   ###
@@ -43,8 +46,15 @@ define (require, exports, module) ->
         unless packageFree
           intersectsWithPackageHolder = mobActor.intersectsWith packageObject.attachedMob.actor
 
-        pickPackage = ((packageFree and intersectsWithPackage and mobActor.dataObject.canPickPackage()) or
-          intersectsWithPackageHolder)
+        pickPackage = (
+          (packageFree and intersectsWithPackage and mobActor.dataObject.canPickPackage()) or
+            (intersectsWithPackageHolder and
+              (
+                (packageObject.attachedMob instanceof Player and mobActor.dataObject instanceof Mob) or
+                (packageObject.attachedMob instanceof Mob and mobActor.dataObject instanceof Player)
+              )
+            )
+          )
 
         if pickPackage
           packageObject = @packageActor.package

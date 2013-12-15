@@ -51,6 +51,11 @@ define (require, exports, module) ->
       #  - As soon as the object of interest is far
       #    away, lose interest in it
       ooiData = @_findObjectOfInterest()
+      unless ooiData
+        @_stopAIAction()
+        @aiState = "idle"
+        @following = false
+        return
 
       # Gain interest
       if (not @objectOfInterest or
@@ -79,8 +84,10 @@ define (require, exports, module) ->
       else if @package.attachedMob is this
         # I HAZ PACKAGE LOLZ
         obj = @level.exits[0]
-      else
+      else unless @package.attachedMob
         obj = @package
+      else
+        return false
 
       platform = obj._findCurrentPlatform()
 
