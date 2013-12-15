@@ -63,11 +63,13 @@ define (require, exports, module) ->
 
       platform = obj._findCurrentPlatform()
       floorPosition = @level.getRealFloorLevel()
-      platformPosition = platform.getRealPosition?() || floorPosition
+      platformPosition = platform.getRealPosition?() || @level.getRealFloorLevel()
 
       distX = Math.pow(@position.x - obj.position.x, 2)
       distY = Math.pow(@position.y - platformPosition.y, 2)
       distance = Math.sqrt(distX + distY)
+
+      debug "AI Distance", distance
 
       if distance < @interestDistance
         return { object: obj, platform: platform }
@@ -87,7 +89,7 @@ define (require, exports, module) ->
         nextPlatform = @_findNextLowerPlatform distX, distY
         if nextPlatform
           newAIState = @_findAIStateForPlatform nextPlatform
-          # console.log newAIState, @aiSwitchAction, if @aiSwitchDirection is -1 then "left" else "right"
+          console.debug newAIState, @aiSwitchAction, if @aiSwitchDirection is -1 then "left" else "right"
           return newAIState
         else
           @aiSwitchDirection = if distX < 0 then -1 else 1
@@ -132,15 +134,19 @@ define (require, exports, module) ->
         @aiSwitchDirection = if distX < 0 then -1 else 1
 
         # Check X distance
-        if distX >= Level.GRID_SIZE * 3
+        absDistX = Math.abs distX
+        if absDistX >= Level.GRID_SIZE * 3
           # Large distance -> Would jumping work?
-          if distX >- Level.GRID_SIZE * 6
+          if absDistX >= Level.GRID_SIZE * 6
             # Yes -> Jump
+            console.debug "Could reach the platform, jumping"
             @aiSwitchAction = "jump"
           else
             # No -> Trial and error. Just run.
+            console.debug "Too large distance, lemming mode!"
             @aiSwitchAction = "run"
         else
+          console.debug "Small distance, running"
           # Small distance, try to run and hit the platform
           @aiSwitchAction = "run"
 

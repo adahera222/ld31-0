@@ -1,7 +1,7 @@
 define (require, exports, module) ->
   LDFW = require "ldfw"
-  Platform = require "level/platform"
-  Ladder = require "level/ladder"
+  Platform = require "level-objects/platform"
+  Ladder = require "level-objects/ladder"
 
   class Level
     @GRID_SIZE: 20
@@ -13,24 +13,24 @@ define (require, exports, module) ->
 
       @scroll = new LDFW.Vector2
 
-      @platforms.push new Platform @app, @game, {
+      @platforms.push new Platform @app, @game, this, {
         position: new LDFW.Vector2 4, 10
         width: 13
       }
-      @platforms.push new Platform @app, @game, {
+      @platforms.push new Platform @app, @game, this, {
         position: new LDFW.Vector2 10, 17
         width: 8
       }
-      @platforms.push new Platform @app, @game, {
-        position: new LDFW.Vector2 20, 21
+      @platforms.push new Platform @app, @game, this, {
+        position: new LDFW.Vector2 26, 21
         width: 8
       }
 
-      @ladders.push new Ladder @app, @game, {
+      @ladders.push new Ladder @app, @game, this, {
         position: new LDFW.Vector2 9, 3
         height: 7
       }
-      @ladders.push new Ladder @app, @game, {
+      @ladders.push new Ladder @app, @game, this, {
         position: new LDFW.Vector2 14, 10
         height: 7
       }
