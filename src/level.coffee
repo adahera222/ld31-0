@@ -88,4 +88,7 @@ define (require, exports, module) ->
 
       return boundaries
 
+    getRealFloorLevel: ->
+      new LDFW.Vector2(0, @app.getHeight() - @floorHeight)
+
   module.exports = Level

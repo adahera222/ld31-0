@@ -16,8 +16,12 @@ define (require, exports, module) ->
 
       @speed = new LDFW.Vector2 250, 250
 
+      # "switch_platform" state
       @aiSwitchDirection = 0
       @aiSwitchAction = null # run or jump
+
+      # "chase" state
+      @aiChaseDirection
 
     update: (delta) ->
       super
@@ -45,8 +49,9 @@ define (require, exports, module) ->
       # Add more logic here:
       #  - As soon as the object of interest is far
       #    away, lose interest in it
+      console.debug "Performing AI check"
       @objectOfInterest = @_findObjectOfInterest()
-      if @objectOfInterest and @aiState is "idle"
+      if @objectOfInterest and @onGround
         @following = true
         @aiState = @_findAIState()
 
@@ -56,18 +61,28 @@ define (require, exports, module) ->
       else
         obj = @package
 
+      platform = obj._findCurrentPlatform()
+      floorPosition = @level.getRealFloorLevel()
+      platformPosition = platform.getRealPosition?() || floorPosition
+
       distX = Math.pow(@position.x - obj.position.x, 2)
-      distY = Math.pow(@position.y - obj.position.y, 2)
+      distY = Math.pow(@position.y - platformPosition.y, 2)
       distance = Math.sqrt(distX + distY)
 
       if distance < @interestDistance
-        return obj
+        return { object: obj, platform: platform }
 
       return false
 
     _findAIState: ->
-      distX = @objectOfInterest.position.x - @position.x
-      distY = @objectOfInterest.position.y - @position.y
+      floorPosition = @level.getRealFloorLevel()
+
+      objectOfInterest = @objectOfInterest.object
+      platformPosition = @objectOfInterest.platform.getRealPosition?() || floorPosition
+
+      distX = objectOfInterest.position.x - @position.x
+      distY = platformPosition.y - @position.y
+
       if distY > 0
         nextPlatform = @_findNextLowerPlatform distX, distY
         if nextPlatform
@@ -79,34 +94,13 @@ define (require, exports, module) ->
           @aiSwitchAction = "run"
           @targetPlatform = "floor"
           return "switch_platform"
-      else
+      else if distY < 0
         # debug "get up"
         return
-
-    _findNextLowerPlatform: (excludeOwn = true) ->
-      platforms = @level.platforms
-
-      additionalCheckDistance = -Level.GRID_SIZE / 2
-      if excludeOwn
-        additionalCheckDistance = Level.GRID_SIZE
-
-      # Find lower platforms
-      interestingPlatforms = []
-      for platform in platforms
-        platformPosition = platform.position
-          .clone()
-          .multiply Level.GRID_SIZE
-
-        platformY = @app.getHeight() - platformPosition.y
-        if platformY > @position.y + additionalCheckDistance
-          interestingPlatforms.push platform
-
-      # Sort by Y position
-      interestingPlatforms.sort (a, b) ->
-        b.position.y - a.position.y
-
-      # Return the nearest platform
-      return interestingPlatforms[0]
+      else
+        # Probably the same platform
+        @aiChaseDirection = if distX < 0 then -1 else 1
+        return "chase"
 
     _findAIStateForPlatform: (platform) ->
       # Is the platform above us?
@@ -158,6 +152,8 @@ define (require, exports, module) ->
         # Later: Move left and right every now and then
       else if @aiState is "switch_platform"
         @_performPlatformSwitch()
+      else if @aiState is "chase"
+        @_performChase()
 
     _performPlatformSwitch: ->
       @velocity.x = @aiSwitchDirection * @speed.x
@@ -170,8 +166,9 @@ define (require, exports, module) ->
           @_stopAIAction()
           @_performAICheck()
 
-    _findCurrentPlatform: ->
-      return @_findNextLowerPlatform false
+    _performChase: ->
+      @velocity.x = @aiChaseDirection * @speed.x
+      @direction = @aiChaseDirection
 
     droppedPackage: ->
       @lastPackageInteraction = Date.now()

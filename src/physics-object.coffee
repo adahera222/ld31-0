@@ -1,5 +1,6 @@
 define (require, exports, module) ->
   LDFW = require "ldfw"
+  Level = require "level"
 
   class PhysicsObject
     constructor: (@app, @game) ->
@@ -42,6 +43,34 @@ define (require, exports, module) ->
         @onGround = true
       else
         @onGround = false
+
+    _findNextLowerPlatform: (excludeOwn = true) ->
+      platforms = @level.platforms
+
+      additionalCheckDistance = -Level.GRID_SIZE / 2
+      if excludeOwn
+        additionalCheckDistance = Level.GRID_SIZE
+
+      # Find lower platforms
+      interestingPlatforms = []
+      for platform in platforms
+        platformPosition = platform.position
+          .clone()
+          .multiply Level.GRID_SIZE
+
+        platformY = @app.getHeight() - platformPosition.y
+        if platformY > @position.y + additionalCheckDistance
+          interestingPlatforms.push platform
+
+      # Sort by Y position
+      interestingPlatforms.sort (a, b) ->
+        b.position.y - a.position.y
+
+      # Return the nearest platform
+      return interestingPlatforms[0]
+
+    _findCurrentPlatform: ->
+      return @_findNextLowerPlatform(false) or "floor"
 
 
 
