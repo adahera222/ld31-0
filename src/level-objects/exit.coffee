@@ -17,7 +17,7 @@ define (require, exports, module) ->
     _findCurrentPlatform: ->
       platforms = @level.platforms
 
-      additionalCheckDistance = -Level.GRID_SIZE / 2
+      additionalCheckDistance = -@level.constructor.GRID_SIZE / 2
 
       position = @getRealPosition()
 
@@ -30,12 +30,10 @@ define (require, exports, module) ->
         platformY = platformPosition.y
         platformWidth = platform.width * Level.GRID_SIZE
 
-        if platformY > position.y + additionalCheckDistance
-          if not xIntersection or
-            (xIntersection and
-              not (position.x > platformX + platformWidth or
-                position.x + @width < platformX))
-                  interestingPlatforms.push platform
+        if platformY > position.y + additionalCheckDistance and
+          not (position.x > platformX + platformWidth or
+            position.x + @width < platformX)
+              interestingPlatforms.push platform
 
 
       # Sort by Y position
