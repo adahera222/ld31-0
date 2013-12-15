@@ -38,8 +38,14 @@ define (require, exports, module) ->
 
     update: (delta) ->
       super
+
+      deadMobs = []
+
       packageObject = @packageActor.package
       for mobActor in @mobActors
+        if mobActor.dataObject.dead
+          deadMobs.push mobActor
+
         packageFree = !packageObject.attachedMob
         intersectsWithPackage = mobActor.intersectsWith @packageActor
 
@@ -59,6 +65,9 @@ define (require, exports, module) ->
         if pickPackage
           packageObject = @packageActor.package
           packageObject.onIntersect mobActor.dataObject
+
+      for mob in deadMobs
+        @mobActors.splice @mobActors.indexOf(mob), 1
 
     draw: (context) ->
       super

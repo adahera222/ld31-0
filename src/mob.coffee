@@ -18,6 +18,7 @@ define (require, exports, module) ->
       @packageDroppedAt = Date.now()
 
       @health = 3
+      @dead = false
 
     lostPackage: ->
       @stun()
@@ -43,11 +44,16 @@ define (require, exports, module) ->
     pickedPackage: -> return
 
     hurt: (direction) ->
+      return if @dead
+
       @health--
       @knockback.set 10, 5
       @knockbackXDirection = direction
 
       @stun()
+
+      if @health <= 0
+        @dead = true
 
     _jump: ->
       if @onGround and not @onLadder

@@ -1,7 +1,6 @@
 Next ToDos
 ==========
 
-* Player can punch if he does not hold the package
 * Add health to mob, ability to die
 * Score
 * Level designs, level switching
