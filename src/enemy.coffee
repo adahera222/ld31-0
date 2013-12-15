@@ -106,9 +106,14 @@ define (require, exports, module) ->
       distY = platformPosition.y - @position.y
 
       if distY > 0
-        nextPlatform = @_findNextLowerPlatform distX, distY
+        nextPlatform = @_findNextLowerPlatform ooiPosition
+
+        console.debug "next lower platform", nextPlatform
+
         if nextPlatform
           newAIState = @_findAIStateForPlatform nextPlatform
+          if newAIState is "switch_platform"
+            console.debug newAIState, @aiSwitchAction, if @aiDirection is -1 then "left" else "right"
           return newAIState
         else
           @aiDirection = if distX < 0 then -1 else 1
@@ -116,7 +121,7 @@ define (require, exports, module) ->
           @targetPlatform = "floor"
           return "switch_platform"
       else if distY < 0
-        nextPlatform = @_findNextHigherPlatform distX, distY
+        nextPlatform = @_findNextHigherPlatform ooiPosition
         if nextPlatform
           newAIState = @_findAIStateForPlatform nextPlatform
           return newAIState

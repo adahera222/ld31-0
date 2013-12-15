@@ -4,6 +4,10 @@ requirejs.config
     ldfw: "../ldfw"
     eventemitter: "../lib/eventEmitter/eventEmitter"
     async: "../lib/async/lib/async"
+    underscore: "../lib/underscore/underscore"
+  shim:
+    underscore:
+      exports: "_"
 
 define (require, exports, module) ->
   ###

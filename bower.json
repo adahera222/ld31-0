@@ -10,6 +10,7 @@
   "dependencies": {
     "ldfw": "git://github.com/saschagehlich/ldfw.git",
     "requirejs": "~2.1.9",
-    "jquery": "~2.0.3"
+    "jquery": "~2.0.3",
+    "underscore": "~1.5.2"
   }
 }

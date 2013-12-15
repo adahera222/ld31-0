@@ -1,6 +1,7 @@
 define (require, exports, module) ->
   LDFW = require "ldfw"
   Level = require "level"
+  _ = require "underscore"
 
   class PhysicsObject
     constructor: (@app, @game) ->
@@ -63,7 +64,7 @@ define (require, exports, module) ->
       # Return the nearest platform
       return interestingPlatforms[0]
 
-    _findNextLowerPlatform: (excludeOwn = true, xIntersection = false) ->
+    _findNextLowerPlatform: (target, excludeOwn = true, xIntersection = false) ->
       platforms = @level.platforms
 
       additionalCheckDistance = -Level.GRID_SIZE / 2
@@ -86,12 +87,38 @@ define (require, exports, module) ->
                 @position.x + @width < platformX))
                   interestingPlatforms.push platform
 
-      # Sort by Y position
-      interestingPlatforms.sort (a, b) ->
-        b.position.y - a.position.y
+      if interestingPlatforms.length is 0
+        return null
 
       # Return the nearest platform
-      return interestingPlatforms[0]
+      grouped = _.groupBy interestingPlatforms, (o) -> o.position.y
+      reversedKeys = Object.keys(grouped).reverse()
+
+      if grouped[reversedKeys[0]].length > 0
+        # We have multiple platforms on this y position
+        # Find the best one
+        interestingPlatforms = grouped[reversedKeys[0]]
+        distX = target.x - @position.x
+
+        # Sort by X (depending on where we want to go)
+        interestingPlatforms.sort (a, b) ->
+          if distX < 0
+            b.position.x - a.position.x
+          else
+            a.position.x - b.position.x
+
+        # Iterate over the platforms, find the first one
+        # that is in the right direction
+        for platform in interestingPlatforms
+          platformPosition = platform.getRealPosition()
+          if (distX > 0 and platformPosition.x > @position.x) or
+            distX < 0 and platformPosition.x < @position.x
+              return platform
+
+        return null
+      else
+        return interestingPlatforms[0]
+
 
     _findCurrentPlatform: ->
       return @_findNextLowerPlatform(false, true) or "floor"
