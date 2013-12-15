@@ -25,6 +25,9 @@ define (require, exports, module) ->
 
       @stockPackages = 9
 
+      @opacity = 1
+      @ended = false
+
       @mobActors = []
       for i in [0...20]
         ((mobActor) =>
@@ -56,7 +59,7 @@ define (require, exports, module) ->
     update: (delta) ->
       super
 
-      mobBuyDuration = 500 # (Naming is hard.)
+      mobBuyDuration = 1500 # (Naming is hard.)
 
       for mob in @mobActors
         mob.position.x += mob.velocity.x * delta
@@ -112,8 +115,12 @@ define (require, exports, module) ->
             mob.isRunning = -> true
             mob.drawMirrored = -> false
 
+          @ended = true
 
     draw: (context) ->
+      context.save()
+      context.globalAlpha = @opacity
+
       roomOffset = @app.getHeight() / 2 - @roomSprite.getHeight() / 2
 
       @roomSprite.draw context, 0, roomOffset
@@ -123,6 +130,8 @@ define (require, exports, module) ->
       @_drawStockPackages context
       @_drawMobs context
       @_drawMessages context
+
+      context.restore()
 
     _drawMessages: (context) ->
       if @drawYOGOMessage

@@ -6,6 +6,7 @@ define (require, exports, module) ->
   GameScreen = require "screens/game-screen"
   SplashScreen = require "screens/splash-screen"
   IntroScreen = require "screens/intro-screen"
+  InstructionsScreen = require "screens/instructions-screen"
 
   ###
    * App definition
@@ -39,8 +40,10 @@ define (require, exports, module) ->
 
         @fontsSheet = new LDFW.TextureAtlas atlasJSON.frames, atlasPNG
 
+        @gameScreen = new GameScreen this
         @splashScreen = new SplashScreen this
         @introScreen = new IntroScreen this
+        @instructionsScreen = new InstructionsScreen this
 
         @screen = @splashScreen
 
@@ -55,6 +58,12 @@ define (require, exports, module) ->
 
     switchToIntroScreen: ->
       @screen = @introScreen
+
+    switchToInstructionsScreen: ->
+      @screen = @instructionsScreen
+
+    switchToGameScreen: ->
+      @screen = @gameScreen
 
   ###
    * Expose App
