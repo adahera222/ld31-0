@@ -8,6 +8,7 @@ define (require, exports, module) ->
       super
 
       @attachedMob = null
+      @previousMob = null
       @jumpForce = 300
 
       @width = 0
@@ -18,18 +19,19 @@ define (require, exports, module) ->
     attachTo: (@attachedMob) ->
       @lastAttachment = Date.now()
 
-    detach: -> @attachedMob = null
+    detach: ->
+      @previousMob = @attachedMob
+      @attachedMob = null
 
     onIntersect: (obj) ->
       return if @attachedMob is obj
       return if obj.stunned
 
       if obj instanceof Mob
-        lastAttached = @attachedMob
-
+        @previousMob = @attachedMob
         @attachTo obj
         obj.pickedPackage()
-        lastAttached?.lostPackage()
+        @previousMob?.lostPackage()
 
     update: (delta) ->
       if @attachedMob?
@@ -40,5 +42,6 @@ define (require, exports, module) ->
 
       if @onGround
         @velocity.x = 0
+        @previousMob = null
 
   module.exports = Package

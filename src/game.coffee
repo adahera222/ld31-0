@@ -34,4 +34,18 @@ define (require, exports, module) ->
       @mobs.push enemy
       @emit "enemy_added", enemy
 
+    nextToMob: (mob) ->
+      for otherMob in @mobs when otherMob isnt mob
+        if otherMob.actor.intersectsWith mob.actor
+          # Direction check
+          rightDirection = (mob.direction is 1 and
+            otherMob.position >= mob.position) or
+            (mob.direction is -1 and
+            otherMob.position <= mob.position)
+          if rightDirection
+            return otherMob
+
+      return false
+
+
   module.exports = Game

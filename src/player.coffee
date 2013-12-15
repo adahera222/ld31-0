@@ -72,6 +72,8 @@ define (require, exports, module) ->
 
     _punch: ->
       @lastPunch = Date.now()
+      if otherMob = @game.nextToMob this
+        otherMob.hurt()
 
     # Todo: Move this to the level.
     _handleLevelScrolling: ->
