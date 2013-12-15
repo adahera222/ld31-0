@@ -2,6 +2,7 @@ define (require, exports, module) ->
   LDFW = require "ldfw"
   Mob = require "mob"
   Level = require "level"
+  Exit = require "level-objects/exit"
 
   class Enemy extends Mob
     interestDistance: 400
@@ -53,14 +54,14 @@ define (require, exports, module) ->
       # Gain interest
       if (not @objectOfInterest or
         (@objectOfInterest and @objectOfInterest.object isnt ooiData.object)) and
-        ooiData.distance < @interestDistance
+        (ooiData.distance < @interestDistance or ooiData.ignoreDistance)
           @objectOfInterest = ooiData
           @aiState = @_findAIState()
           @following = true
 
       # Lose interest
       else if @objectOfInterest and
-        ooiData.distance > @loseInterestDistance
+        (ooiData.distance > @loseInterestDistance and not ooiData.ignoreDistance)
           @objectOfInterest = null
           @_stopAIAction()
           @following = false
@@ -74,10 +75,17 @@ define (require, exports, module) ->
     _findObjectOfInterest: ->
       if @package.attachedMob is @player
         obj = @player
+      else if @package.attachedMob is this
+        # I HAZ PACKAGE LOLZ
+        obj = @level.exits[0]
       else
         obj = @package
 
       platform = obj._findCurrentPlatform()
+
+      if obj instanceof Exit
+        return { object: obj, platform: platform, ignoreDistance: true }
+
       floorPosition = @level.getRealFloorLevel()
       platformPosition = platform.getRealPosition?() || @level.getRealFloorLevel()
 
@@ -93,7 +101,8 @@ define (require, exports, module) ->
       objectOfInterest = @objectOfInterest.object
       platformPosition = @objectOfInterest.platform.getRealPosition?() || floorPosition
 
-      distX = objectOfInterest.position.x - @position.x
+      ooiPosition = objectOfInterest.getRealPosition()
+      distX = ooiPosition.x - @position.x
       distY = platformPosition.y - @position.y
 
       if distY > 0

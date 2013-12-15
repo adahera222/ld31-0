@@ -107,4 +107,6 @@ define (require, exports, module) ->
         platformEdge = platformPosition.x + platformWidth - Level.GRID_SIZE
         return @position.x > platformEdge
 
+    getRealPosition: -> @position
+
   module.exports = PhysicsObject

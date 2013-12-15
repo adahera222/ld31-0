@@ -12,7 +12,7 @@ define (require, exports, module) ->
       @level = new Level @app, this, "level-0"
       @package = new Package @app, this
       @player = new Player @app, this
-      @player.position.set 280, 100
+      @player.position.set 400, 100
 
       @package.attachTo @player
 
@@ -28,7 +28,8 @@ define (require, exports, module) ->
 
     addEnemy: ->
       enemy = new Enemy @app, this
-      enemy.position.set Math.random() * @app.getWidth(), @level.floorHeight + Math.random() * @app.getHeight()
+      enemy.position.set @player.position
+      enemy.position.x += 100
 
       @mobs.push enemy
       @emit "enemy_added", enemy

@@ -1,7 +1,10 @@
 define (require, exports, module) ->
   LDFW = require "ldfw"
+
   Platform = require "level-objects/platform"
   Ladder = require "level-objects/ladder"
+  Exit = require "level-objects/exit"
+
   LevelParser = require "level-parser"
 
   class Level
@@ -11,6 +14,7 @@ define (require, exports, module) ->
       @gravity = new LDFW.Vector2 0, 5000
       @platforms = []
       @ladders = []
+      @exits = []
 
       @scroll = new LDFW.Vector2
 
@@ -103,5 +107,12 @@ define (require, exports, module) ->
         position: new LDFW.Vector2 x, y
       }
       @ladders.push ladder
+
+    addExit: (x, y) ->
+      y = @height - y - 1
+      exit = new Exit @app, @game, this, {
+        position: new LDFW.Vector2 x, y
+      }
+      @exits.push exit
 
   module.exports = Level
