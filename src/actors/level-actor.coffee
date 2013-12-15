@@ -6,6 +6,8 @@ define (require, exports, module) ->
   Level = require "level"
   LadderActor = require "actors/ladder-actor"
   PlatformActor = require "actors/platform-actor"
+  ExitActor = require "actors/exit-actor"
+  SpawnActor = require "actors/spawn-actor"
 
   class LevelActor extends LDFW.Actor
     GRID_SIZE: Level.GRID_SIZE
@@ -17,6 +19,8 @@ define (require, exports, module) ->
 
       @ladderActor = new LadderActor @app, @game
       @platformActor = new PlatformActor @app, @game
+      @exitActor = new ExitActor @app, @game
+      @spawnActor = new SpawnActor @app, @game
 
       @floorSprite = @spriteSheet.createSprite "world/floor.png"
 
@@ -25,6 +29,8 @@ define (require, exports, module) ->
       @_drawFloor context
       @_drawPlatforms context
       @_drawLadders context
+      @_drawExits context
+      @_drawSpawn context
 
     _drawBackground: (context) ->
       @_drawVerticalBars context
@@ -90,6 +96,24 @@ define (require, exports, module) ->
           position.x - @level.scroll.x,
           position.y - ladderHeight - @level.scroll.y,
           ladderHeight
+
+    _drawExits: (context) ->
+      for exit in @level.exits
+        position = exit.getRealPosition()
+        @exitActor.draw context,
+          position.x - @level.scroll.x,
+          position.y - @level.scroll.y - @exitActor.height
+
+    _drawSpawn: (context) ->
+      position = @game.spawn
+        .clone()
+        .divideBy @GRID_SIZE
+
+      position.y = @level.height - position.y - 1
+      @spawnActor.draw context,
+        position.x * @GRID_SIZE - @level.scroll.x - @GRID_SIZE / 2,
+        @app.getHeight() - position.y * @GRID_SIZE - @spawnActor.height - @level.scroll.y,
+        true
 
 
   module.exports = LevelActor

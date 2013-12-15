@@ -2,7 +2,7 @@
 
 "package-back.png":
 {
-	"frame": {"x":230,"y":48,"w":22,"h":18},
+	"frame": {"x":92,"y":232,"w":22,"h":18},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":18},
@@ -10,7 +10,7 @@
 },
 "package.png":
 {
-	"frame": {"x":206,"y":48,"w":22,"h":18},
+	"frame": {"x":92,"y":212,"w":22,"h":18},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":18},
@@ -18,7 +18,7 @@
 },
 "player/holding-idle.png":
 {
-	"frame": {"x":156,"y":80,"w":30,"h":30},
+	"frame": {"x":64,"y":180,"w":30,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
@@ -26,7 +26,7 @@
 },
 "player/holding-running.png":
 {
-	"frame": {"x":144,"y":48,"w":60,"h":30},
+	"frame": {"x":2,"y":212,"w":60,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
@@ -42,7 +42,7 @@
 },
 "player/offground.png":
 {
-	"frame": {"x":2,"y":90,"w":90,"h":30},
+	"frame": {"x":144,"y":48,"w":90,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":90,"h":30},
@@ -50,7 +50,7 @@
 },
 "player/punch.png":
 {
-	"frame": {"x":188,"y":80,"w":26,"h":30},
+	"frame": {"x":64,"y":212,"w":26,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":30},
@@ -58,15 +58,39 @@
 },
 "player/run.png":
 {
-	"frame": {"x":94,"y":90,"w":60,"h":30},
+	"frame": {"x":2,"y":180,"w":60,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
 	"sourceSize": {"w":60,"h":30}
 },
+"world/entrance.png":
+{
+	"frame": {"x":134,"y":80,"w":64,"h":98},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":98},
+	"sourceSize": {"w":64,"h":98}
+},
+"world/exit-open.png":
+{
+	"frame": {"x":68,"y":80,"w":64,"h":98},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":98},
+	"sourceSize": {"w":64,"h":98}
+},
+"world/exit.png":
+{
+	"frame": {"x":2,"y":80,"w":64,"h":98},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":98},
+	"sourceSize": {"w":64,"h":98}
+},
 "world/floor.png":
 {
-	"frame": {"x":2,"y":48,"w":140,"h":40},
+	"frame": {"x":2,"y":38,"w":140,"h":40},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":140,"h":40},
@@ -93,8 +117,8 @@
 	"version": "1.0",
 	"image": "sprites.png",
 	"format": "RGBA8888",
-	"size": {"w":256,"h":128},
+	"size": {"w":256,"h":256},
 	"scale": "2",
-	"smartupdate": "$TexturePacker:SmartUpdate:c9be5118b1457556974901aa4e7fa5da:ca19c4e5fab9c525b1de5f9cb6296a2b:1eabdf11f75e3a4fe3147baf7b5be24b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:0be846d4b9bdb6cd16bbad201d692f0d:10239509973576eb8a73e2be2bd342ce:1eabdf11f75e3a4fe3147baf7b5be24b$"
 }
 }
