@@ -20,17 +20,31 @@ define (require, exports, module) ->
       @onLadder = false
       @ignoreGravity = false
 
-    update: (delta) ->
-      unless @ignoreGravity
-        gravityStep = @level.gravity.clone()
-        gravityStep.multiply delta
+      @knockback = new LDFW.Vector2
+      @knockbackXDirection = 1
 
+    update: (delta) ->
+      gravityStep = @level.gravity.clone()
+      gravityStep.multiply delta
+
+      unless @ignoreGravity
         @velocity.add gravityStep
 
       velocityStep = @velocity.clone()
       velocityStep.multiply delta
 
-      aspiredPosition = @position.clone().add velocityStep
+      aspiredPosition = @position
+        .clone()
+        .add(velocityStep)
+
+      aspiredPosition.x += @knockback.x * @knockbackXDirection
+      aspiredPosition.y -= @knockback.y
+
+      @knockback.x -= 100 * delta
+      @knockback.y -= 100 * delta
+
+      @knockback.x = Math.max 0, @knockback.x
+      @knockback.y = Math.max 0, @knockback.y
 
       boundaries = @level.getBoundariesForObject this
       @_handleXMovement aspiredPosition, boundaries

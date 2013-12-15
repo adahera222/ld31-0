@@ -26,6 +26,7 @@ define (require, exports, module) ->
 
       # debug @aiState
 
+      return #disable AI
       aiCheckInterval = @_getAICheckInterval()
       timePassed = Date.now() - @lastAICheck
       if timePassed >= aiCheckInterval
