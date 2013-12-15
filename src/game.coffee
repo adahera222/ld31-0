@@ -9,7 +9,7 @@ define (require, exports, module) ->
     horizontalScrollPadding: 0.2
     verticalScrollPadding: 0.3
     constructor: (@app) ->
-      @level = new Level @app, this
+      @level = new Level @app, this, "level-0"
       @package = new Package @app, this
       @player = new Player @app, this
       @player.position.set 280, 100

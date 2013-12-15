@@ -34,7 +34,7 @@ define (require, exports, module) ->
         @game.addEnemy()
         setTimeout(=>
           addEnemy()
-        , Math.round(Math.random() * 1000))
+        , 2000 + Math.round(Math.random() * 3000))
 
       setTimeout(->
         addEnemy()

@@ -2,36 +2,23 @@ define (require, exports, module) ->
   LDFW = require "ldfw"
   Platform = require "level-objects/platform"
   Ladder = require "level-objects/ladder"
+  LevelParser = require "level-parser"
 
   class Level
     @GRID_SIZE: 20
     floorHeight: 40
-    constructor: (@app, @game) ->
+    constructor: (@app, @game, @fileName) ->
       @gravity = new LDFW.Vector2 0, 5000
       @platforms = []
       @ladders = []
 
       @scroll = new LDFW.Vector2
 
-      @platforms.push new Platform @app, @game, this, {
-        position: new LDFW.Vector2 4, 10
-        width: 13
-      }
-      @platforms.push new Platform @app, @game, this, {
-        position: new LDFW.Vector2 10, 18
-        width: 8
-      }
-      @platforms.push new Platform @app, @game, this, {
-        position: new LDFW.Vector2 23, 21
-        width: 8
-      }
+      @width = 0
+      @height = 0
 
-      @ladders.push new Ladder @app, @game, this, {
-        position: new LDFW.Vector2 9, 2
-      }
-      @ladders.push new Ladder @app, @game, this, {
-        position: new LDFW.Vector2 14, 10
-      }
+      @parser = new LevelParser @app, @game, this, @fileName
+      @parser.parse()
 
     update: -> debug
 
@@ -101,5 +88,20 @@ define (require, exports, module) ->
           return ladder
 
       return false
+
+    addPlatform: (x, y, width) ->
+      y = @height - y
+      platform = new Platform @app, @game, this, {
+        width: width,
+        position: new LDFW.Vector2 x, y
+      }
+      @platforms.push platform
+
+    addLadder: (x, y) ->
+      y = @height - y - 1
+      ladder = new Ladder @app, @game, this, {
+        position: new LDFW.Vector2 x, y
+      }
+      @ladders.push ladder
 
   module.exports = Level

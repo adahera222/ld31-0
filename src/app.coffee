@@ -14,7 +14,9 @@ define (require, exports, module) ->
 
       @preloader = new LDFW.Preloader this, [
         "assets/sprites.png",
-        "assets/sprites.json"
+        "assets/sprites.json",
+
+        "assets/levels/level-0.png"
       ]
       @preloader.on "done", =>
 
