@@ -4,6 +4,7 @@ define (require, exports, module) ->
   Level = require "level"
 
   class Player extends Mob
+    minPunchDelay: 300
     constructor: (@app, @game) ->
       super
 
@@ -71,6 +72,8 @@ define (require, exports, module) ->
         @_punch()
 
     _punch: ->
+      return if Date.now() - @lastPunch < @minPunchDelay
+
       @lastPunch = Date.now()
       if otherMob = @game.nextToMob this
         otherMob.hurt @direction

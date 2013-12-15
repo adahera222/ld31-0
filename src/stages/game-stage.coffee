@@ -70,14 +70,18 @@ define (require, exports, module) ->
         @mobActors.splice @mobActors.indexOf(mob), 1
 
     draw: (context) ->
-      super
-
       {width, height} = context.canvas
 
-      context.fillStyle = "#73a7d0"
-      context.fillRect 0, 0, width, height
+      gradient = context.createLinearGradient 0, 0, 0, height
+      gradient.addColorStop 0, "#73a7d0"
+      gradient.addColorStop 1, "#568bb4"
 
-      @levelActor.draw context
+      context.save()
+      context.fillStyle = gradient
+      context.fillRect 0, 0, width, height
+      context.restore()
+
+      super
 
       for mobActor in @mobActors
         mobActor.draw context
