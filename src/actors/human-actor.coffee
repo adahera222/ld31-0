@@ -11,7 +11,8 @@ define (require, exports, module) ->
       super @game
 
       {@spriteSheet} = @app
-      {@package} = @game
+      if @game?
+        {@package} = @game
 
       @blinkTimer = 0
       @blinking = false
@@ -32,12 +33,14 @@ define (require, exports, module) ->
       @width = @holdingIdleSprite.getWidth()
       @height = @holdingIdleSprite.getHeight()
 
-      @dataObject.width = @width
-      @dataObject.height = @height
+      if @dataObject?
+        @dataObject.width = @width
+        @dataObject.height = @height
 
     update: (delta) ->
       super
-      @position.set @dataObject.position
+      if @dataObject?
+        @position.set @dataObject.position
 
       @holdingRunningSprite.update delta
       @runningSprite.update delta
@@ -45,32 +48,48 @@ define (require, exports, module) ->
 
       @blinkTimer += delta
 
-    draw: (context, dx, dy) ->
-      level = @game.level
+    hasPackage: ->
+      return @package.attachedMob is @dataObject
 
+    isOnGround: ->
+      @dataObject?.onGround
+
+    drawPunch: ->
+      @dataObject? and
+        @dataObject.lastPunch? and
+        Date.now() - @dataObject.lastPunch <= 100 and
+        @punchSprite?
+
+    isRunning: ->
+      @dataObject.velocity.x isnt 0
+
+    drawMirrored: ->
+      @dataObject?.direction is -1
+
+    draw: (context, dx, dy) ->
       unless dx? and dy?
+        level = @game.level
+
         dx = @position.x - level.scroll.x
         dy = @position.y - @height - level.scroll.y
 
-      mirrored = @dataObject.direction is -1
+      mirrored = @drawMirrored()
 
       sprite = @idleSprite
-      if not @dataObject.onGround and
-        @package.attachedMob isnt @dataObject
+      if not @isOnGround() and
+        not @hasPackage()
           sprite = @offgroundSprite
-      else if @dataObject.lastPunch? and
-        Date.now() - @dataObject.lastPunch <= 100 and
-        @punchSprite?
+      else if @drawPunch()
           sprite = @punchSprite
           unless mirrored
             dx -= sprite.getWidth() - @idleSprite.getWidth()
-      else if @dataObject.velocity.x isnt 0
-        if @package.attachedMob is @dataObject
+      else if @isRunning()
+        if @hasPackage()
           sprite = @holdingRunningSprite
         else
           sprite = @runningSprite
       else
-        if @package.attachedMob is @dataObject
+        if @hasPackage()
           sprite = @holdingIdleSprite
         else
           sprite = @idleSprite
@@ -78,7 +97,7 @@ define (require, exports, module) ->
       context.save()
       alpha = 1
 
-      if @dataObject.stunned and @blinkTimer >= 0.2
+      if @dataObject?.stunned and @blinkTimer >= 0.2
         @blinking = !@blinking
         @blinkTimer = 0
 
@@ -91,8 +110,9 @@ define (require, exports, module) ->
       sprite.draw context, dx, dy, mirrored
       context.restore()
 
-      if Date.now() - @dataObject.attentionGainedAt < 1000
-        @attentionSprite.draw context, dx, dy - 30
+      if @dataObject?
+        if Date.now() - @dataObject.attentionGainedAt < 1000
+          @attentionSprite.draw context, dx, dy - 30
 
     intersectsWith: (actor) ->
       return not (actor.position.x > @position.x + @width or

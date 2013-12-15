@@ -1,10 +1,10 @@
 Next ToDos
 ==========
 
-* Score
-* Level designs, level switching
 * Intro
-* Home screen
+* Level designs, level switching
+* Score
+
 * Mob death animation
 * Climbing animation
 

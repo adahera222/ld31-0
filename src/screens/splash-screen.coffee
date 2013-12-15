@@ -13,11 +13,14 @@ define (require, exports, module) ->
       super
 
       @splashStage = new SplashStage @app, @game
+      @keyboard = new LDFW.Keyboard
 
     update: (delta) ->
       super
 
       @splashStage.update delta
+      if @keyboard.pressed @keyboard.Keys.ENTER
+        @game.switchToIntroScreen()
 
     draw: (context) ->
       super
