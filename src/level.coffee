@@ -18,7 +18,7 @@ define (require, exports, module) ->
         width: 13
       }
       @platforms.push new Platform @app, @game, this, {
-        position: new LDFW.Vector2 10, 17
+        position: new LDFW.Vector2 10, 18
         width: 8
       }
       @platforms.push new Platform @app, @game, this, {

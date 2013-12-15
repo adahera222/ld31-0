@@ -28,7 +28,7 @@ define (require, exports, module) ->
 
     addEnemy: ->
       enemy = new Enemy @app, this
-      enemy.position.set 150, 150
+      enemy.position.set Math.random() * @app.getWidth(), @level.floorHeight + Math.random() * @app.getHeight()
 
       @mobs.push enemy
       @emit "enemy_added", enemy

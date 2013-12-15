@@ -30,7 +30,15 @@ define (require, exports, module) ->
         @mobActors.push mobActor
         @addActor mobActor
 
-      @game.addEnemy()
+      addEnemy = =>
+        @game.addEnemy()
+        setTimeout(=>
+          addEnemy()
+        , Math.round(Math.random() * 1000))
+
+      setTimeout(->
+        addEnemy()
+      , 3000)
 
     update: (delta) ->
       super

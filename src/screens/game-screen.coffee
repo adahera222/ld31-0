@@ -14,6 +14,7 @@ define (require, exports, module) ->
       super
 
       @game = new Game @app
+      window.game = @game
       @gameStage = new GameStage @app, @game
 
     ###
