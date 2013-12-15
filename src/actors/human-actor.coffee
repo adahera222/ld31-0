@@ -27,6 +27,8 @@ define (require, exports, module) ->
       if this.dataObject instanceof Player
         @punchSprite = @spriteSheet.createSprite "#{@spriteBasePath}/punch.png"
 
+      @attentionSprite = @spriteSheet.createSprite "attention.png"
+
       @width = @holdingIdleSprite.getWidth()
       @height = @holdingIdleSprite.getHeight()
 
@@ -71,7 +73,6 @@ define (require, exports, module) ->
         else
           sprite = @idleSprite
 
-      # I'm dumb. <-- Definitely.
       context.save()
       alpha = 1
 
@@ -87,6 +88,9 @@ define (require, exports, module) ->
 
       sprite.draw context, dx, dy, mirrored
       context.restore()
+
+      if Date.now() - @dataObject.attentionGainedAt < 1000
+        @attentionSprite.draw context, dx, dy - 30
 
     intersectsWith: (actor) ->
       return not (actor.position.x > @position.x + @width or

@@ -1,8 +1,16 @@
 {"frames": {
 
+"attention.png":
+{
+	"frame": {"x":220,"y":278,"w":30,"h":26},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":26},
+	"sourceSize": {"w":30,"h":26}
+},
 "enemy/0/holding-idle.png":
 {
-	"frame": {"x":200,"y":112,"w":30,"h":30},
+	"frame": {"x":188,"y":278,"w":30,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
@@ -10,7 +18,7 @@
 },
 "enemy/0/holding-running.png":
 {
-	"frame": {"x":126,"y":212,"w":60,"h":30},
+	"frame": {"x":64,"y":280,"w":60,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
@@ -18,7 +26,7 @@
 },
 "enemy/0/idle.png":
 {
-	"frame": {"x":200,"y":80,"w":30,"h":30},
+	"frame": {"x":2,"y":310,"w":30,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
@@ -26,7 +34,7 @@
 },
 "enemy/0/offground.png":
 {
-	"frame": {"x":2,"y":180,"w":90,"h":30},
+	"frame": {"x":126,"y":82,"w":90,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":90,"h":30},
@@ -34,15 +42,95 @@
 },
 "enemy/0/run.png":
 {
-	"frame": {"x":94,"y":180,"w":60,"h":30},
+	"frame": {"x":126,"y":278,"w":60,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
 	"sourceSize": {"w":60,"h":30}
 },
+"enemy/1/holding-idle.png":
+{
+	"frame": {"x":68,"y":144,"w":22,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":30},
+	"sourceSize": {"w":22,"h":30}
+},
+"enemy/1/holding-running.png":
+{
+	"frame": {"x":2,"y":278,"w":60,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
+	"sourceSize": {"w":60,"h":30}
+},
+"enemy/1/idle.png":
+{
+	"frame": {"x":216,"y":246,"w":30,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
+	"sourceSize": {"w":30,"h":30}
+},
+"enemy/1/offground.png":
+{
+	"frame": {"x":2,"y":112,"w":90,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":90,"h":30},
+	"sourceSize": {"w":90,"h":30}
+},
+"enemy/1/run.png":
+{
+	"frame": {"x":64,"y":248,"w":60,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
+	"sourceSize": {"w":60,"h":30}
+},
+"enemy/2/holding-idle.png":
+{
+	"frame": {"x":94,"y":80,"w":30,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":32},
+	"sourceSize": {"w":30,"h":32}
+},
+"enemy/2/holding-running.png":
+{
+	"frame": {"x":2,"y":244,"w":60,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":32},
+	"sourceSize": {"w":60,"h":32}
+},
+"enemy/2/idle.png":
+{
+	"frame": {"x":204,"y":16,"w":30,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":32},
+	"sourceSize": {"w":30,"h":32}
+},
+"enemy/2/offground.png":
+{
+	"frame": {"x":2,"y":80,"w":90,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":90,"h":30},
+	"sourceSize": {"w":90,"h":30}
+},
+"enemy/2/run.png":
+{
+	"frame": {"x":92,"y":214,"w":60,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":32},
+	"sourceSize": {"w":60,"h":32}
+},
 "package-back.png":
 {
-	"frame": {"x":232,"y":100,"w":22,"h":18},
+	"frame": {"x":68,"y":196,"w":22,"h":18},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":18},
@@ -50,7 +138,7 @@
 },
 "package.png":
 {
-	"frame": {"x":232,"y":80,"w":22,"h":18},
+	"frame": {"x":68,"y":176,"w":22,"h":18},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":18},
@@ -58,7 +146,7 @@
 },
 "player/holding-idle.png":
 {
-	"frame": {"x":156,"y":180,"w":30,"h":30},
+	"frame": {"x":216,"y":214,"w":30,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
@@ -66,7 +154,7 @@
 },
 "player/holding-running.png":
 {
-	"frame": {"x":64,"y":212,"w":60,"h":30},
+	"frame": {"x":154,"y":246,"w":60,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
@@ -74,7 +162,7 @@
 },
 "player/idle.png":
 {
-	"frame": {"x":204,"y":16,"w":30,"h":30},
+	"frame": {"x":218,"y":82,"w":30,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
@@ -82,7 +170,7 @@
 },
 "player/offground.png":
 {
-	"frame": {"x":144,"y":48,"w":90,"h":30},
+	"frame": {"x":144,"y":50,"w":90,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":90,"h":30},
@@ -90,7 +178,7 @@
 },
 "player/punch.png":
 {
-	"frame": {"x":200,"y":144,"w":26,"h":30},
+	"frame": {"x":226,"y":114,"w":26,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":30},
@@ -98,7 +186,7 @@
 },
 "player/run.png":
 {
-	"frame": {"x":2,"y":212,"w":60,"h":30},
+	"frame": {"x":154,"y":214,"w":60,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
@@ -106,7 +194,7 @@
 },
 "world/entrance.png":
 {
-	"frame": {"x":134,"y":80,"w":64,"h":98},
+	"frame": {"x":160,"y":114,"w":64,"h":98},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":98},
@@ -114,7 +202,7 @@
 },
 "world/exit-open.png":
 {
-	"frame": {"x":68,"y":80,"w":64,"h":98},
+	"frame": {"x":2,"y":144,"w":64,"h":98},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":98},
@@ -122,7 +210,7 @@
 },
 "world/exit.png":
 {
-	"frame": {"x":2,"y":80,"w":64,"h":98},
+	"frame": {"x":94,"y":114,"w":64,"h":98},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":98},
@@ -157,8 +245,8 @@
 	"version": "1.0",
 	"image": "sprites.png",
 	"format": "RGBA8888",
-	"size": {"w":256,"h":256},
+	"size": {"w":256,"h":512},
 	"scale": "2",
-	"smartupdate": "$TexturePacker:SmartUpdate:f04d79f69954fa777d3445931aa92ce9:a9d9d874bef2aeb5f412038e8e73bd4e:1eabdf11f75e3a4fe3147baf7b5be24b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:1e9ebc06b48f77fad0aec7d4e9792b44:184b8ad7d0f96d40d266900446a89e1c:1eabdf11f75e3a4fe3147baf7b5be24b$"
 }
 }

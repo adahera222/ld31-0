@@ -16,6 +16,8 @@ define (require, exports, module) ->
       @lastPunch = Date.now()
 
       @packageDroppedAt = Date.now()
+      @attentionGainedAt = 0
+      @followedPlayerOrPackage = false
 
       @health = 3
       @dead = false

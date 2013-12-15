@@ -4,6 +4,9 @@ define (require, exports, module) ->
   Level = require "level"
   Exit = require "level-objects/exit"
 
+  Player = require "player"
+  Package = require "package"
+
   class Enemy extends Mob
     interestDistance: 400
     loseInterestDistance: 800
@@ -64,6 +67,12 @@ define (require, exports, module) ->
           @objectOfInterest = ooiData
           @aiState = @_findAIState()
           @following = true
+
+          if (@objectOfInterest.object instanceof Player or
+            @objectOfInterest.object instanceof Package) and
+              not @followedPlayerOrPackage
+                @attentionGainedAt = Date.now()
+                @followedPlayerOrPackage = true
 
       # Lose interest
       else if @objectOfInterest and

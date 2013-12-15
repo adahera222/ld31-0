@@ -6,7 +6,8 @@ define (require, exports, module) ->
 
   class EnemyActor extends HumanActor
     constructor: ->
-      @spriteBasePath = "enemy/0"
+      @spriteType = Math.round(Math.random() * 2)
+      @spriteBasePath = "enemy/#{@spriteType}"
 
       super
 
