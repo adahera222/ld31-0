@@ -72,6 +72,15 @@ define (require, exports, module) ->
     _findCurrentPlatform: ->
       return @_findNextLowerPlatform(false) or "floor"
 
+    _isAtPlatformEdge: (platform, direction) ->
+      platformPosition = platform.getRealPosition()
+      platformWidth = platform.width * Level.GRID_SIZE
 
+      if direction is -1
+        platformEdge = platformPosition.x + Level.GRID_SIZE
+        return @position.x < platformEdge
+      else
+        platformEdge = platformPosition.x + platformWidth - Level.GRID_SIZE
+        return @position.x > platformEdge
 
   module.exports = PhysicsObject

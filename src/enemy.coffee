@@ -162,15 +162,32 @@ define (require, exports, module) ->
         @_performChase()
 
     _performPlatformSwitch: ->
+      currentPlatform = @_findCurrentPlatform()
+
       @velocity.x = @aiSwitchDirection * @speed.x
       @direction = @aiSwitchDirection
 
-      if @_findCurrentPlatform() is @targetPlatform
+      if currentPlatform is @targetPlatform
         # We're done here.
         @velocity.x = 0
         if @onGround
           @_stopAIAction()
           @_performAICheck()
+      else if @aiSwitchAction is "jump"
+        if currentPlatform is "floor"
+          # We need some other logic here:
+          #  - Jump if the x-distance to the platform
+          #    is small enough
+        else
+          # If we are 1 GRID_SIZE away from the
+          # platform edge, jump.
+          reachedPlatformEdge = @_isAtPlatformEdge(
+            currentPlatform,
+            @aiSwitchDirection
+          )
+
+          if reachedPlatformEdge
+            @_jump()
 
     _performChase: ->
       @velocity.x = @aiChaseDirection * @speed.x

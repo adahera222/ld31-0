@@ -14,4 +14,8 @@ define (require, exports, module) ->
     canInteractWithPackage: ->
       return Date.now() - @lastPackageInteraction > @minPackageInteractionDelay
 
+    _jump: ->
+      if @onGround and not @onLadder
+        @velocity.y = -@jumpForce
+
   module.exports = Mob

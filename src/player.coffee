@@ -47,8 +47,8 @@ define (require, exports, module) ->
         @ignoreGravity = false
         @onLadder = false
 
-      if moveUp and @onGround and not @onLadder
-        @velocity.y = -@jumpForce
+      if moveUp
+        @_jump()
 
       if throwPackage and
         @package.attachedMob is this and
