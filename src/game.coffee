@@ -29,6 +29,7 @@ define (require, exports, module) ->
     setSpawn: ->
       @spawn.set.apply @spawn, arguments
       @spawn.multiply Level.GRID_SIZE
+      @spawn.y = @app.getHeight() - @spawn.y
 
     update: (delta) ->
       @level.update delta

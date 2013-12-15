@@ -110,7 +110,7 @@ define (require, exports, module) ->
           ]
 
           if rgb[0] is 255 and rgb[1] is 178 and rgb[2] is 0
-            @game.addEnemy x, y
+            @game.addEnemy x, @canvas.height - y
 
     _findSpawn: ->
       imageData = @context.getImageData 0, 0, @canvas.width, @canvas.height
@@ -127,6 +127,7 @@ define (require, exports, module) ->
           ]
 
           if rgb[0] is 123 and rgb[1] is 123 and rgb[2] is 123
+            y = @canvas.height - y
             @game.setSpawn x, y
 
   module.exports = LevelParser

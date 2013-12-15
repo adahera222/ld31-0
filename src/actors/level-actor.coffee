@@ -106,13 +106,9 @@ define (require, exports, module) ->
 
     _drawSpawn: (context) ->
       position = @game.spawn
-        .clone()
-        .divideBy @GRID_SIZE
-
-      position.y = @level.height - position.y - 1
       @spawnActor.draw context,
-        position.x * @GRID_SIZE - @level.scroll.x - @GRID_SIZE / 2,
-        @app.getHeight() - position.y * @GRID_SIZE - @spawnActor.height - @level.scroll.y,
+        position.x  - @level.scroll.x - @GRID_SIZE / 2,
+        position.y + @GRID_SIZE - @spawnActor.height - @level.scroll.y,
         true
 
   module.exports = LevelActor

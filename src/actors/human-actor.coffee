@@ -58,7 +58,8 @@ define (require, exports, module) ->
         @package.attachedMob isnt @dataObject
           sprite = @offgroundSprite
       else if @dataObject.lastPunch? and
-        Date.now() - @dataObject.lastPunch <= 100
+        Date.now() - @dataObject.lastPunch <= 100 and
+        @punchSprite?
           sprite = @punchSprite
           unless mirrored
             dx -= sprite.getWidth() - @idleSprite.getWidth()
