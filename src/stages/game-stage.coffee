@@ -39,6 +39,9 @@ define (require, exports, module) ->
     update: (delta) ->
       super
 
+      # Exit intersection check
+      {level} = @game
+      packageObject = @game.package
       deadMobs = []
 
       packageObject = @packageActor.package
@@ -46,6 +49,22 @@ define (require, exports, module) ->
         if mobActor.dataObject.dead
           deadMobs.push mobActor
 
+        if mobActor.dataObject is packageObject.attachedMob
+          exitActor = @levelActor.exitActor
+          for exit in level.exits
+            position = exit.getRealPosition()
+            exitRect = {
+              x: position.x,
+              y: position.y,
+              width: exitActor.width,
+              height: exitActor.height
+            }
+
+            if mobActor.intersectsWithRect exitRect
+              @game.gameEnded
+                winner: mobActor.dataObject
+
+        # Package intersection check
         packageFree = !packageObject.attachedMob
         intersectsWithPackage = mobActor.intersectsWith @packageActor
 

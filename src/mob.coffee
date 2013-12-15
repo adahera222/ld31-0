@@ -49,7 +49,7 @@ define (require, exports, module) ->
       return if @dead
 
       @health--
-      @knockback.set 10, 5
+      @knockback.set 14, 10
       @knockbackXDirection = direction
 
       @stun()

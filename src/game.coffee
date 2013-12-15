@@ -20,6 +20,18 @@ define (require, exports, module) ->
 
       @player = new Player @app, this
 
+      @ended = false
+      @running = false
+      @winner = null
+
+    run: ->
+      @running = true
+
+    gameEnded: (options) ->
+      @ended = true
+      @running = false
+      {@winner} = options
+
     spawnPlayer: ->
       @player.position.set @spawn
       @mobs.push @player
@@ -32,6 +44,8 @@ define (require, exports, module) ->
       @spawn.y = @app.getHeight() - @spawn.y
 
     update: (delta) ->
+      return unless @running
+
       @level.update delta
 
       deadMobs = []

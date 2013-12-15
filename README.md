@@ -1,7 +1,6 @@
 Next ToDos
 ==========
 
-* Fix punching
 * Score
 * Level designs, level switching
 * Intro

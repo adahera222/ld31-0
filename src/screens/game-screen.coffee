@@ -5,6 +5,8 @@ define (require, exports, module) ->
   LDFW = require "ldfw"
   Game = require "game"
   GameStage = require "../stages/game-stage"
+  WinningStage = require "../stages/winning-stage"
+  LosingStage = require "../stages/losing-stage"
 
   ###
    * GameScreen definition
@@ -17,8 +19,13 @@ define (require, exports, module) ->
       window.game = @game
       @gameStage = new GameStage @app, @game
 
+      @winningStage = new WinningStage @app, @game
+      @losingStage = new LosingStage @app, @game
+
       @game.level.parse()
       @game.spawnPlayer()
+
+      @game.run()
 
     ###
      * Update positions etc.
@@ -26,7 +33,12 @@ define (require, exports, module) ->
     ###
     update: (delta) ->
       @game.update delta
-      @gameStage.update delta
+      unless @game.ended
+        @gameStage.update delta
+      else
+        @winningStage.update delta
+        @losingStage.update delta
+
       return
 
     ###
@@ -35,6 +47,13 @@ define (require, exports, module) ->
     ###
     draw: (context) ->
       @gameStage.draw context
+
+      if @game.ended
+        if @game.winner is @game.player
+          @winningStage.draw context
+        else
+          @losingStage.draw context
+
       return
 
   ###

@@ -24,11 +24,12 @@ define (require, exports, module) ->
       super
       @position.set @package.position
 
-    draw: (context) ->
+    draw: (context, dx, dy) ->
       level = @game.level
 
-      dx = @position.x + 4 - level.scroll.x
-      dy = @position.y - @height - level.scroll.y
+      unless dx? and dy?
+        dx = @position.x + 4 - level.scroll.x
+        dy = @position.y - @height - level.scroll.y
 
       @sprite.draw context, dx, dy
 

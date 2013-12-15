@@ -96,7 +96,7 @@ define (require, exports, module) ->
       else unless @package.attachedMob
         obj = @package
       else
-        return false
+        obj = @package.attachedMob
 
       platform = obj._findCurrentPlatform()
 

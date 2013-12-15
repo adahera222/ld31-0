@@ -45,11 +45,12 @@ define (require, exports, module) ->
 
       @blinkTimer += delta
 
-    draw: (context) ->
+    draw: (context, dx, dy) ->
       level = @game.level
 
-      dx = @position.x - level.scroll.x
-      dy = @position.y - @height - level.scroll.y
+      unless dx? and dy?
+        dx = @position.x - level.scroll.x
+        dy = @position.y - @height - level.scroll.y
 
       mirrored = @dataObject.direction is -1
 
@@ -98,5 +99,11 @@ define (require, exports, module) ->
         actor.position.x + actor.width < @position.x or
         actor.position.y > @position.y or
         actor.position.y + actor.height < @position.y - @height)
+
+    intersectsWithRect: (rect) ->
+      return not (rect.x > @position.x + @width or
+        rect.x + rect.width < @position.x or
+        rect.y > @position.y or
+        rect.y + rect.height < @position.y - @height)
 
   module.exports = PlayerActor

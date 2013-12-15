@@ -16,6 +16,13 @@ define (require, exports, module) ->
         "assets/sprites.png",
         "assets/sprites.json",
 
+        "assets/fonts.png",
+        "assets/fonts.json",
+
+        "assets/fonts/pixel-16.fnt",
+        "assets/fonts/pixel-24.fnt",
+        "assets/fonts/pixel-8.fnt",
+
         "assets/levels/level-0.png"
       ]
       @preloader.on "done", =>
@@ -24,6 +31,11 @@ define (require, exports, module) ->
         atlasJSON = @preloader.get "assets/sprites.json"
 
         @spriteSheet = new LDFW.TextureAtlas atlasJSON.frames, atlasPNG
+
+        atlasPNG = @preloader.get "assets/fonts.png"
+        atlasJSON = @preloader.get "assets/fonts.json"
+
+        @fontsSheet = new LDFW.TextureAtlas atlasJSON.frames, atlasPNG
 
         @screen = new GameScreen this
 
