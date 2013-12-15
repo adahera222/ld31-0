@@ -16,7 +16,7 @@ define (require, exports, module) ->
       @aiState = "idle"
       @lastAICheck = Date.now()
 
-      @speed = new LDFW.Vector2 250, 250
+      @speed = new LDFW.Vector2 500, 500
 
       @aiSwitchAction = null # run or jump
       @aiDirection = 0
@@ -108,12 +108,8 @@ define (require, exports, module) ->
       if distY > 0
         nextPlatform = @_findNextLowerPlatform ooiPosition
 
-        console.debug "next lower platform", nextPlatform
-
         if nextPlatform
           newAIState = @_findAIStateForPlatform nextPlatform
-          if newAIState is "switch_platform"
-            console.debug newAIState, @aiSwitchAction, if @aiDirection is -1 then "left" else "right"
           return newAIState
         else
           @aiDirection = if distX < 0 then -1 else 1
@@ -242,7 +238,6 @@ define (require, exports, module) ->
     _performClimb: ->
       @_climb()
       unless @level.isMobTouchingLadder(this, @aiTargetLadder)
-        console.log "not climbing anymore"
         @_stopAIAction()
         @_stopClimbing()
 

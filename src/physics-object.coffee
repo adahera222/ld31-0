@@ -67,9 +67,9 @@ define (require, exports, module) ->
     _findNextLowerPlatform: (target, excludeOwn = true, xIntersection = false) ->
       platforms = @level.platforms
 
-      additionalCheckDistance = -Level.GRID_SIZE / 2
+      additionalCheckDistance = Level.GRID_SIZE / 2
       if excludeOwn
-        additionalCheckDistance = Level.GRID_SIZE
+        additionalCheckDistance = -Level.GRID_SIZE / 2
 
       # Find lower platforms
       interestingPlatforms = []
@@ -80,7 +80,7 @@ define (require, exports, module) ->
         platformY = platformPosition.y
         platformWidth = platform.width * Level.GRID_SIZE
 
-        if platformY > @position.y + additionalCheckDistance
+        if platformY > @position.y - additionalCheckDistance
           if not xIntersection or
             (xIntersection and
               not (@position.x > platformX + platformWidth or
@@ -94,7 +94,7 @@ define (require, exports, module) ->
       grouped = _.groupBy interestingPlatforms, (o) -> o.position.y
       reversedKeys = Object.keys(grouped).reverse()
 
-      if grouped[reversedKeys[0]].length > 0
+      if grouped[reversedKeys[0]].length > 1 and target?
         # We have multiple platforms on this y position
         # Find the best one
         interestingPlatforms = grouped[reversedKeys[0]]
@@ -121,7 +121,7 @@ define (require, exports, module) ->
 
 
     _findCurrentPlatform: ->
-      return @_findNextLowerPlatform(false, true) or "floor"
+      return @_findNextLowerPlatform(null, false, true) or "floor"
 
     _isAtPlatformEdge: (platform, direction) ->
       platformPosition = platform.getRealPosition()
