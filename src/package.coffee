@@ -1,6 +1,7 @@
 define (require, exports, module) ->
   LDFW = require "ldfw"
   PhysicsObject = require "physics-object"
+  Mob = require "mob"
 
   class Package extends PhysicsObject
     constructor: (@app, @game) ->
@@ -14,6 +15,17 @@ define (require, exports, module) ->
 
     attachTo: (@attachedMob) -> return
     detach: -> @attachedMob = null
+
+    onIntersect: (obj) ->
+      return if @attachedMob is obj
+
+      if obj instanceof Mob and
+        obj.canInteractWithPackage()
+          lastAttached = @attachedMob
+
+          @attachTo obj
+          obj.pickedPackage()
+          lastAttached.lostPackage()
 
     update: (delta) ->
       if @attachedMob?

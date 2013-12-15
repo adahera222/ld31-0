@@ -3,6 +3,7 @@ define (require, exports, module) ->
    * Module dependencies
   ###
   LDFW = require "ldfw"
+  Player = require "player"
 
   class PlayerActor extends LDFW.Actor
     spriteBasePath: "none"
@@ -11,6 +12,9 @@ define (require, exports, module) ->
 
       {@spriteSheet} = @app
       {@package} = @game
+
+      @blinkTimer = 0
+      @blinking = false
 
       @holdingIdleSprite = @spriteSheet.createSprite "#{@spriteBasePath}/holding-idle.png"
       @holdingRunningSprite = @spriteSheet.createAnimSprite "#{@spriteBasePath}/holding-running.png", 2, 0.05
@@ -33,6 +37,8 @@ define (require, exports, module) ->
       @holdingRunningSprite.update delta
       @runningSprite.update delta
       @offgroundSprite.update delta
+
+      @blinkTimer += delta
 
     draw: (context) ->
       level = @game.level
@@ -57,7 +63,21 @@ define (require, exports, module) ->
         else
           sprite = @idleSprite
 
+      # I'm dumb. <-- Definitely.
+      context.save()
+      alpha = 1
+
+      if @dataObject.stunned and @blinkTimer >= 0.2
+        @blinking = !@blinking
+        @blinkTimer = 0
+
+      if @blinking
+        alpha = 0.5
+
+      context.save()
+      context.globalAlpha = alpha
       sprite.draw context, dx, dy, mirrored
+      context.restore()
 
     intersectsWith: (actor) ->
       return not (actor.position.x > @position.x + @width or

@@ -24,12 +24,6 @@ define (require, exports, module) ->
       super
       @position.set @package.position
 
-    onIntersect: (obj) ->
-      if obj instanceof Mob and
-        obj.canInteractWithPackage()
-          @package.attachTo obj
-          obj.pickedPackage()
-
     draw: (context) ->
       level = @game.level
 

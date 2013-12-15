@@ -34,10 +34,11 @@ define (require, exports, module) ->
 
     update: (delta) ->
       super
-      unless @game.package.attachedMob?
-        for actor in @mobActors
-          if actor.intersectsWith @packageActor
-            @packageActor.onIntersect actor.dataObject
+      for mobActor in @mobActors
+        if (not game.package.attachedMob? and mobActor.intersectsWith @packageActor) or
+          (game.package.attachedMob is @game.player and mobActor.intersectsWith @playerActor)
+            packageObject = @packageActor.package
+            packageObject.onIntersect mobActor.dataObject
 
     draw: (context) ->
       super

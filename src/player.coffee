@@ -23,10 +23,11 @@ define (require, exports, module) ->
       moveUp = @keyboard.pressed @keyboard.Keys.UP
       throwPackage = @keyboard.pressed @keyboard.Keys.SPACE
 
-      if moveLeft
+
+      if moveLeft and not @stunned
         @velocity.x = -@speed.x
         @direction = -1
-      else if moveRight
+      else if moveRight and not @stunned
         @velocity.x = @speed.x
         @direction = 1
       else
@@ -34,12 +35,12 @@ define (require, exports, module) ->
 
       touchingLadder = @level.isMobTouchingLadder this
 
-      if moveUp and touchingLadder and @package.attachedMob isnt this
+      if moveUp and touchingLadder and @package.attachedMob isnt this and not @stunned
         @ignoreGravity = true
         @onLadder = true
 
       if @onLadder
-        if moveUp
+        if moveUp and not @stunned
           @velocity.y = -@speed.y
         else
           @velocity.y = 0
@@ -48,10 +49,10 @@ define (require, exports, module) ->
         @ignoreGravity = false
         @onLadder = false
 
-      if moveUp
+      if moveUp and not @stunned
         @_jump()
 
-      if throwPackage and
+      if throwPackage and not @stunned and
         @package.attachedMob is this and
           @canInteractWithPackage()
             @droppedPackage()
