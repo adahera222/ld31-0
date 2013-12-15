@@ -18,6 +18,7 @@ define (require, exports, module) ->
       @gameStage = new GameStage @app, @game
 
       @game.level.parse()
+      @game.spawnPlayer()
 
     ###
      * Update positions etc.

@@ -1,4 +1,6 @@
 define (require, exports, module) ->
+  LDFW = require "ldfw"
+
   Player = require "player"
   Level = require "level"
   Enemy = require "enemy"
@@ -11,14 +13,22 @@ define (require, exports, module) ->
     constructor: (@app) ->
       @mobs = []
 
+      @spawn = new LDFW.Vector2 400, 100
+
       @level = new Level @app, this, "level-0"
       @package = new Package @app, this
 
       @player = new Player @app, this
-      @player.position.set 400, 100
+
+    spawnPlayer: ->
+      @player.position.set @spawn
       @mobs.push @player
 
       @package.attachTo @player
+
+    setSpawn: ->
+      @spawn.set.apply @spawn, arguments
+      @spawn.multiply Level.GRID_SIZE
 
     update: (delta) ->
       @level.update delta

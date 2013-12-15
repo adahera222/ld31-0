@@ -13,6 +13,7 @@ define (require, exports, module) ->
       @_findLadders()
       @_findExits()
       @_findEnemies()
+      @_findSpawn()
 
     _prepareCanvas: ->
       @canvas = document.createElement "canvas"
@@ -105,5 +106,22 @@ define (require, exports, module) ->
 
           if rgb[0] is 255 and rgb[1] is 178 and rgb[2] is 0
             @game.addEnemy x, y
+
+    _findSpawn: ->
+      imageData = @context.getImageData 0, 0, @canvas.width, @canvas.height
+      imageData = imageData.data
+
+      for y in [0...@canvas.height]
+        for x in [0...@canvas.width]
+          index = (@canvas.width * y + x) * 4
+
+          rgb = [
+            imageData[index],
+            imageData[index + 1],
+            imageData[index + 2]
+          ]
+
+          if rgb[0] is 123 and rgb[1] is 123 and rgb[2] is 123
+            @game.setSpawn x, y
 
   module.exports = LevelParser

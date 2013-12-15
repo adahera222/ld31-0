@@ -1,11 +1,11 @@
 Next ToDos
 ==========
 
-* Add health to mob, ability to die
 * Score
 * Level designs, level switching
 * Intro
 * Home screen
+* Mob death animation
 * Climbing animation
 
 AI Fixes
