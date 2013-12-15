@@ -253,10 +253,4 @@ define (require, exports, module) ->
       @ignoreGravity = false
       @onLadder = false
 
-    droppedPackage: ->
-      @lastPackageInteraction = Date.now()
-
-    pickedPackage: ->
-      @droppedPackage()
-
   module.exports = Enemy

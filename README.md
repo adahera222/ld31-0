@@ -1,7 +1,6 @@
 Next ToDos
 ==========
 
-* If a mob touches the player, stun him for 2 seconds
 * Player can punch if he does not hold the package
 * Add health to mob, ability to die
 * Score

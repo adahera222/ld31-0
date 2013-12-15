@@ -14,6 +14,8 @@ define (require, exports, module) ->
       @stunned = false
       @stunStart = null
 
+      @lastPunch = Date.now()
+
       @packageDroppedAt = Date.now()
 
     lostPackage: ->
@@ -32,6 +34,8 @@ define (require, exports, module) ->
 
     droppedPackage: ->
       @packageDroppedAt = Date.now()
+
+    pickedPackage: -> return
 
     _jump: ->
       if @onGround and not @onLadder

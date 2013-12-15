@@ -21,8 +21,7 @@ define (require, exports, module) ->
       moveLeft = @keyboard.pressed @keyboard.Keys.LEFT
       moveRight = @keyboard.pressed @keyboard.Keys.RIGHT
       moveUp = @keyboard.pressed @keyboard.Keys.UP
-      throwPackage = @keyboard.pressed @keyboard.Keys.SPACE
-
+      throwOrPunch = @keyboard.pressed @keyboard.Keys.SPACE
 
       if moveLeft and not @stunned
         @velocity.x = -@speed.x
@@ -52,7 +51,7 @@ define (require, exports, module) ->
       if moveUp and not @stunned
         @_jump()
 
-      if throwPackage and not @stunned and
+      if throwOrPunch and not @stunned and
         @package.attachedMob is this
           @droppedPackage()
 
@@ -67,6 +66,12 @@ define (require, exports, module) ->
             @package.velocity.x = Math.min @package.velocity.x, -@minimumThrowingVelocity
           else
             @package.velocity.x = @direction * @minimumThrowingVelocity
+
+      else if throwOrPunch and not @stunned
+        @_punch()
+
+    _punch: ->
+      @lastPunch = Date.now()
 
     # Todo: Move this to the level.
     _handleLevelScrolling: ->

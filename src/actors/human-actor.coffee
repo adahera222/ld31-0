@@ -24,6 +24,8 @@ define (require, exports, module) ->
 
       @offgroundSprite = @spriteSheet.createAnimSprite "#{@spriteBasePath}/offground.png", 3, 0.2
 
+      @punchSprite = @spriteSheet.createSprite "#{@spriteBasePath}/punch.png"
+
       @width = @holdingIdleSprite.getWidth()
       @height = @holdingIdleSprite.getHeight()
 
@@ -52,6 +54,11 @@ define (require, exports, module) ->
       if not @dataObject.onGround and
         @package.attachedMob isnt @dataObject
           sprite = @offgroundSprite
+      else if @dataObject.lastPunch? and
+        Date.now() - @dataObject.lastPunch <= 100
+          sprite = @punchSprite
+          unless mirrored
+            dx -= sprite.getWidth() - @idleSprite.getWidth()
       else if @dataObject.velocity.x isnt 0
         if @package.attachedMob is @dataObject
           sprite = @holdingRunningSprite
@@ -76,6 +83,7 @@ define (require, exports, module) ->
 
       context.save()
       context.globalAlpha = alpha
+
       sprite.draw context, dx, dy, mirrored
       context.restore()
 

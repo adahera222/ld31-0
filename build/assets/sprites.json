@@ -48,6 +48,14 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":90,"h":30},
 	"sourceSize": {"w":90,"h":30}
 },
+"player/punch.png":
+{
+	"frame": {"x":188,"y":196,"w":26,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":30},
+	"sourceSize": {"w":26,"h":30}
+},
 "player/run.png":
 {
 	"frame": {"x":94,"y":206,"w":60,"h":30},
@@ -87,6 +95,6 @@
 	"format": "RGBA8888",
 	"size": {"w":256,"h":256},
 	"scale": "2",
-	"smartupdate": "$TexturePacker:SmartUpdate:18d73dd24a8939ba8df598827ddc424e:b8e39445a185bac521d7518239f3af22:1eabdf11f75e3a4fe3147baf7b5be24b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:639ebddb0b1fbee68afb0e05f0008535:451b230c5baf11ed62d82b207e62fbf6:1eabdf11f75e3a4fe3147baf7b5be24b$"
 }
 }
