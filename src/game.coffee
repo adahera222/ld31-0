@@ -28,7 +28,7 @@ define (require, exports, module) ->
 
     addEnemy: ->
       enemy = new Enemy @app, this
-      enemy.position.set @player.position
+      enemy.position.set 450, 20
 
       @mobs.push enemy
       @emit "enemy_added", enemy
