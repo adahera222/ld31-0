@@ -24,9 +24,6 @@ define (require, exports, module) ->
     update: (delta) ->
       super
 
-      # debug @aiState
-
-      return #disable AI
       aiCheckInterval = @_getAICheckInterval()
       timePassed = Date.now() - @lastAICheck
       if timePassed >= aiCheckInterval
