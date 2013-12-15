@@ -15,7 +15,7 @@ define (require, exports, module) ->
 
       @storeActor = new StoreActor @app
       @inStoreActor = new InStoreActor @app
-      @addActor @inStoreActor
+      @addActor @storeActor
 
       @fadeoutTimePassed = 0
       @ended = false
@@ -28,8 +28,9 @@ define (require, exports, module) ->
 
       @timePassed += delta
 
-      if @storeActor.ended
+      if @storeActor.ended and not @storeActor.removed
         @removeActor @storeActor
+        @storeActor.removed = true
         @addActor @inStoreActor
 
       if @inStoreActor.ended
@@ -39,7 +40,7 @@ define (require, exports, module) ->
         @fadeoutTimePassed += delta
 
       if @fadeoutTimePassed >= 1 or
-        (@keyboard.pressed(@keyboard.Keys.ENTER) and @timePassed > 1)
+        (@keyboard.pressed(@keyboard.Keys.ENTER) and @timePassed > 0.3)
           @app.switchToInstructionsScreen()
 
   ###

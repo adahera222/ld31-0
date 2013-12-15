@@ -18,6 +18,8 @@ define (require, exports, module) ->
       @exitActor = new ExitActor @app, @game
       @packageActor = new PackageActor @app, @game
 
+      @keyboard = new LDFW.Keyboard
+
       @smallWhiteFont = new LDFW.BitmapFont(
         @app.preloader.get("assets/fonts/pixel-8.fnt"),
         @fontsSheet.findRegion("pixel-8-white.png"),
@@ -36,6 +38,9 @@ define (require, exports, module) ->
       @game.winner.onGround = false
       @game.package.detach()
       @game.winner.actor.update delta
+
+      if @keyboard.pressed @keyboard.Keys.ENTER
+        @app.restartGame()
 
     draw: (context) ->
       {width, height} = context.canvas

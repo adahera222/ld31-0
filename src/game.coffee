@@ -11,6 +11,9 @@ define (require, exports, module) ->
     horizontalScrollPadding: 0.4
     verticalScrollPadding: 0.5
     constructor: (@app) ->
+      @init()
+
+    init: ->
       @mobs = []
 
       @spawn = new LDFW.Vector2 400, 100
@@ -23,6 +26,10 @@ define (require, exports, module) ->
       @ended = false
       @running = false
       @winner = null
+
+    reset: ->
+      @init()
+      @run()
 
     run: ->
       @running = true

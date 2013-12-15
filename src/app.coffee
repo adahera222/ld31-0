@@ -65,6 +65,10 @@ define (require, exports, module) ->
     switchToGameScreen: ->
       @screen = @gameScreen
 
+    restartGame: ->
+      @gameScreen = new GameScreen this
+      @screen = @gameScreen
+
   ###
    * Expose App
   ###

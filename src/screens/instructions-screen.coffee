@@ -15,11 +15,14 @@ define (require, exports, module) ->
       @sprite = @spriteSheet.createSprite "instructions.png"
 
       @keyboard = new LDFW.Keyboard
+      @timePassed = 0
 
     update: (delta) ->
       super
 
-      if @keyboard.pressed @keyboard.Keys.ENTER
+      @timePassed += delta
+
+      if @keyboard.pressed(@keyboard.Keys.ENTER) and @timePassed > 0.3
         @app.switchToGameScreen()
 
     draw: (context) ->
