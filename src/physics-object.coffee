@@ -33,9 +33,14 @@ define (require, exports, module) ->
       aspiredPosition = @position.clone().add velocityStep
 
       boundaries = @level.getBoundariesForObject this
+      @_handleXMovement aspiredPosition, boundaries
       @_handleYMovement aspiredPosition, boundaries
 
       @position.set aspiredPosition
+
+    _handleXMovement: (position, boundaries) ->
+      position.x = Math.max boundaries.x.min, position.x
+      position.x = Math.min boundaries.x.max, position.x
 
     _handleYMovement: (position, boundaries) ->
       if position.y >= boundaries.y.max

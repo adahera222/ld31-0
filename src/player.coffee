@@ -1,6 +1,7 @@
 define (require, exports, module) ->
   LDFW = require "ldfw"
   Mob = require "mob"
+  Level = require "level"
 
   class Player extends Mob
     constructor: (@app, @game) ->
@@ -79,6 +80,7 @@ define (require, exports, module) ->
 
       minX = 0
       @level.scroll.x = Math.max 0, @level.scroll.x
+      @level.scroll.x = Math.min (@level.width * Level.GRID_SIZE) - @app.getWidth(), @level.scroll.x
 
       scrollPadding = @game.verticalScrollPadding * @app.getHeight()
       minY = scrollPadding

@@ -59,7 +59,7 @@ define (require, exports, module) ->
       boundaries =
         x:
           min: 0
-          max: 1000
+          max: @width * Level.GRID_SIZE - obj.width
           object: null
         y:
           min: 0

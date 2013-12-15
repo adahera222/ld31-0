@@ -1,7 +1,6 @@
 Next ToDos
 ==========
 
-* Ending of level
 * Level boundaries
 * AI escape logic (find level exit)
 * If a mob touches the player, stun him for 2 seconds
@@ -11,11 +10,10 @@ Next ToDos
 * Level designs, level switching
 * Intro
 * Home screen
-
+* Climbing animation
 
 AI Fixes
 ========
 
-* Two ladders above each other will result in the enemy climbing to the very top instead of jumping off after the first one
-
+Low prio:
 * When switching platforms with a small distance, enemies still jump instead of just walking and falling down

@@ -16,7 +16,7 @@ define (require, exports, module) ->
       @aiState = "idle"
       @lastAICheck = Date.now()
 
-      @speed = new LDFW.Vector2 500, 500
+      @speed = new LDFW.Vector2 250, 250
 
       @aiSwitchAction = null # run or jump
       @aiDirection = 0
