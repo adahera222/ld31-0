@@ -26,7 +26,7 @@ define (require, exports, module) ->
 
     update: -> debug
 
-    isMobTouchingLadder: (mob, fullyOnLadder = false) ->
+    isMobTouchingLadder: (mob, specificLadder, fullyOnLadder = false) ->
       for ladder in @ladders
         ladderPosition = ladder.position
           .clone()
@@ -50,7 +50,8 @@ define (require, exports, module) ->
             unless (mob.position.y <= ladderY or
               mob.position.y - mob.height >= ladderY + ladderHeight)
                 intersection = true
-                return true
+                if not specificLadder or specificLadder is ladder
+                  return ladder
 
       return false
 

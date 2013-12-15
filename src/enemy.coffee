@@ -235,13 +235,14 @@ define (require, exports, module) ->
       @velocity.x = @aiDirection * @speed.x
       @direction = @aiDirection
 
-      if @level.isMobTouchingLadder this, true
+      if @level.isMobTouchingLadder(this, @aiTargetLadder, true)
         @_stopAIAction()
         @aiState = "climb"
 
     _performClimb: ->
       @_climb()
-      unless @level.isMobTouchingLadder this
+      unless @level.isMobTouchingLadder(this, @aiTargetLadder)
+        console.log "not climbing anymore"
         @_stopAIAction()
         @_stopClimbing()
 

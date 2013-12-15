@@ -17,4 +17,5 @@ AI Fixes
 ========
 
 * Two ladders above each other will result in the enemy climbing to the very top instead of jumping off after the first one
+
 * When switching platforms with a small distance, enemies still jump instead of just walking and falling down
