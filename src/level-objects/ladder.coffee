@@ -3,8 +3,7 @@ define (require, exports, module) ->
 
   class Ladder
     constructor: (@app, @game, @level, options) ->
-      @height = 8
-      {@position} = options
+      {@height, @position} = options
 
     getRealPosition: ->
       realPosition = @position

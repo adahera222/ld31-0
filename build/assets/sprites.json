@@ -2,7 +2,7 @@
 
 "package-back.png":
 {
-	"frame": {"x":180,"y":228,"w":22,"h":18},
+	"frame": {"x":230,"y":48,"w":22,"h":18},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":18},
@@ -10,7 +10,7 @@
 },
 "package.png":
 {
-	"frame": {"x":156,"y":228,"w":22,"h":18},
+	"frame": {"x":206,"y":48,"w":22,"h":18},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":18},
@@ -18,7 +18,7 @@
 },
 "player/holding-idle.png":
 {
-	"frame": {"x":156,"y":196,"w":30,"h":30},
+	"frame": {"x":156,"y":80,"w":30,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
@@ -26,7 +26,7 @@
 },
 "player/holding-running.png":
 {
-	"frame": {"x":144,"y":164,"w":60,"h":30},
+	"frame": {"x":144,"y":48,"w":60,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
@@ -34,7 +34,7 @@
 },
 "player/idle.png":
 {
-	"frame": {"x":206,"y":164,"w":30,"h":30},
+	"frame": {"x":204,"y":16,"w":30,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
@@ -42,7 +42,7 @@
 },
 "player/offground.png":
 {
-	"frame": {"x":2,"y":206,"w":90,"h":30},
+	"frame": {"x":2,"y":90,"w":90,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":90,"h":30},
@@ -50,7 +50,7 @@
 },
 "player/punch.png":
 {
-	"frame": {"x":188,"y":196,"w":26,"h":30},
+	"frame": {"x":188,"y":80,"w":26,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":30},
@@ -58,7 +58,7 @@
 },
 "player/run.png":
 {
-	"frame": {"x":94,"y":206,"w":60,"h":30},
+	"frame": {"x":94,"y":90,"w":60,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
@@ -66,7 +66,7 @@
 },
 "world/floor.png":
 {
-	"frame": {"x":2,"y":164,"w":140,"h":40},
+	"frame": {"x":2,"y":48,"w":140,"h":40},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":140,"h":40},
@@ -74,11 +74,11 @@
 },
 "world/ladder.png":
 {
-	"frame": {"x":204,"y":2,"w":40,"h":160},
+	"frame": {"x":204,"y":2,"w":40,"h":12},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":160},
-	"sourceSize": {"w":40,"h":160}
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":12},
+	"sourceSize": {"w":40,"h":12}
 },
 "world/platform.png":
 {
@@ -93,8 +93,8 @@
 	"version": "1.0",
 	"image": "sprites.png",
 	"format": "RGBA8888",
-	"size": {"w":256,"h":256},
+	"size": {"w":256,"h":128},
 	"scale": "2",
-	"smartupdate": "$TexturePacker:SmartUpdate:639ebddb0b1fbee68afb0e05f0008535:451b230c5baf11ed62d82b207e62fbf6:1eabdf11f75e3a4fe3147baf7b5be24b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:c9be5118b1457556974901aa4e7fa5da:ca19c4e5fab9c525b1de5f9cb6296a2b:1eabdf11f75e3a4fe3147baf7b5be24b$"
 }
 }

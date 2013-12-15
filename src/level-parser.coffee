@@ -70,7 +70,12 @@ define (require, exports, module) ->
 
           if rgb[0] is 0 and rgb[1] is 255 and rgb[2] is 0
             # Ladder!
-            @level.addLadder x, y
+            realY = (@canvas.height - y)
+            platformAbove = @level.findPlatformAbove x, realY
+
+            if platformAbove
+              height = platformAbove.position.y - realY + 1
+              @level.addLadder x, realY, height
 
     _findExits: ->
       imageData = @context.getImageData 0, 0, @canvas.width, @canvas.height

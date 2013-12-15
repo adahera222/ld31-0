@@ -94,6 +94,22 @@ define (require, exports, module) ->
 
       return false
 
+    findPlatformAbove: (x, y) ->
+      platforms = @platforms.slice()
+      platforms.sort (a, b) ->
+        a.position.y - b.position.y
+
+
+      for platform in platforms
+        {position, width} = platform
+
+        unless position.x > x or
+          position.x + width < x or
+          position.y < y
+            return platform
+
+      return false
+
     addPlatform: (x, y, width) ->
       platform = new Platform @app, @game, this, {
         width: width,
@@ -102,10 +118,11 @@ define (require, exports, module) ->
 
       @platforms.push platform
 
-    addLadder: (x, y) ->
-      y = @height - y - 1
+    addLadder: (x, y, height) ->
+      y = y - 1
       ladder = new Ladder @app, @game, this, {
         position: new LDFW.Vector2 x, y
+        height: height
       }
       @ladders.push ladder
 

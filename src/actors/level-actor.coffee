@@ -89,6 +89,7 @@ define (require, exports, module) ->
         @ladderActor.draw context,
           position.x - @level.scroll.x,
           position.y - ladderHeight - @level.scroll.y,
+          ladderHeight
 
 
   module.exports = LevelActor
