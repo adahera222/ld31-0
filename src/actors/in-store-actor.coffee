@@ -21,6 +21,8 @@ define (require, exports, module) ->
       @msgOnlyOneSprite = @spriteSheet.createSprite "store/msg-only-one.png"
       @msgLastOneSprite = @spriteSheet.createSprite "store/msg-last-one.png"
 
+      @attentionSprite = @spriteSheet.createSprite "attention.png"
+
       @stockPackages = 9
 
       @mobActors = []
@@ -32,21 +34,29 @@ define (require, exports, module) ->
           mobActor.position = new LDFW.Vector2 i * 23, 0
           mobActor.velocity = new LDFW.Vector2 0, 0
           mobActor.minX = mobActor.position.x
+          mobActor.attention = false
 
           @mobActors.push mobActor
         )(new MobActor @app)
 
-      @mobActors[8] = new PlayerActor @app
-      @mobActors[8].position = new LDFW.Vector2 8 * 23, 0
-      @mobActors[8].velocity = new LDFW.Vector2 0, 0
-      @mobActors[8].minX = @mobActors[8].position.x
-      @_mockActorStates @mobActors[8]
+      @playerActor = new PlayerActor @app
+      @playerActor.position = new LDFW.Vector2 8 * 23, 0
+      @playerActor.velocity = new LDFW.Vector2 0, 0
+      @playerActor.minX = @playerActor.position.x
+      @_mockActorStates @playerActor
+
+      @mobActors[8] = @playerActor
 
       @lastPackage = Date.now()
       @lastMob = Date.now()
 
+      @drawYOGOMessage = true
+      @drawLastOneMessage = false
+
     update: (delta) ->
       super
+
+      mobBuyDuration = 500 # (Naming is hard.)
 
       for mob in @mobActors
         mob.position.x += mob.velocity.x * delta
@@ -57,7 +67,9 @@ define (require, exports, module) ->
 
         mob.update delta
 
-      if Date.now() - @lastMob > 1000 and @stockPackages > 1
+      @drawYOGOMessage = Date.now() - @lastMob < mobBuyDuration - 200
+
+      if Date.now() - @lastMob > mobBuyDuration and @stockPackages > 1
         mobIndex = 9 - @stockPackages
 
         mob = @mobActors[mobIndex]
@@ -73,9 +85,33 @@ define (require, exports, module) ->
 
         @lastMob = Date.now()
 
-      if Date.now() - @lastPackage > 1000 and @stockPackages > 1
+      if Date.now() - @lastPackage > mobBuyDuration and @stockPackages > 1
         @stockPackages--
         @lastPackage = Date.now()
+
+      timePassed = Date.now() - @lastMob
+      if @stockPackages <= 1 and timePassed > 2000
+        @drawLastOneMessage = true
+
+        if timePassed > 4000
+          @playerActor.velocity.x = 500
+          @playerActor.isRunning = -> true
+          @playerActor.drawMirrored = -> false
+
+          @stockPackages--
+          @stockPackages = Math.max 0, @stockPackages
+
+        if timePassed > 5000
+          for mob in @mobActors
+            mob.attention = true
+
+        if timePassed > 6000
+          for mob in @mobActors
+            mob.attention = false
+            mob.velocity.x = 500 + Math.random() * 200
+            mob.isRunning = -> true
+            mob.drawMirrored = -> false
+
 
     draw: (context) ->
       roomOffset = @app.getHeight() / 2 - @roomSprite.getHeight() / 2
@@ -86,6 +122,13 @@ define (require, exports, module) ->
 
       @_drawStockPackages context
       @_drawMobs context
+      @_drawMessages context
+
+    _drawMessages: (context) ->
+      if @drawYOGOMessage
+        @msgOnlyOneSprite.draw context, 65, 245
+      if @drawLastOneMessage
+        @msgLastOneSprite.draw context, 88, 245
 
     _drawMobs: (context) ->
       roomOffset = @app.getHeight() / 2 - @roomSprite.getHeight() / 2
@@ -94,6 +137,11 @@ define (require, exports, module) ->
         mob.draw context,
           200 + mob.position.x,
           roomOffset + @roomSprite.getHeight() - mob.height
+
+        if mob.attention
+          @attentionSprite.draw context,
+            200 + mob.position.x,
+            roomOffset + @roomSprite.getHeight() - mob.height - 30
 
     _drawStockPackages: (context) ->
       roomOffset = @app.getHeight() / 2 - @roomSprite.getHeight() / 2
