@@ -34,6 +34,7 @@ define (require, exports, module) ->
     update: (delta) ->
       super
       @game.winner.onGround = false
+      @game.winner.direction = 1
       @game.package.detach()
       @game.winner.actor.update delta
 
@@ -82,7 +83,7 @@ define (require, exports, module) ->
       @smallWhiteFont.drawText context, text, @app.getWidth() / 2 - bounds.width / 2, 320
 
       # SCORE
-      text = "&e0"
+      text = "I DON'T KNOW!!"
       bounds = @biggerGreenFont.getBounds text
       @biggerGreenFont.drawText context, text, @app.getWidth() / 2 - bounds.width / 2, 335
 

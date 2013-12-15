@@ -3,7 +3,8 @@ define (require, exports, module) ->
    * Module dependencies
   ###
   LDFW = require "ldfw"
-  GameScreen = require "./screens/game-screen"
+  GameScreen = require "screens/game-screen"
+  SplashScreen = require "screens/splash-screen"
 
   ###
    * App definition
@@ -37,7 +38,7 @@ define (require, exports, module) ->
 
         @fontsSheet = new LDFW.TextureAtlas atlasJSON.frames, atlasPNG
 
-        @screen = new GameScreen this
+        @screen = new SplashScreen this
 
         @run()
 

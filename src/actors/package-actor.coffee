@@ -17,8 +17,9 @@ define (require, exports, module) ->
       @width = @sprite.getWidth()
       @height = @sprite.getHeight()
 
-      @package.width = @width
-      @package.height = @height
+      if @package?
+        @package.width = @width
+        @package.height = @height
 
     update: ->
       super
