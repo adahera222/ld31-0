@@ -1,11 +1,11 @@
 Next ToDos
 ==========
 
+* Fix punching
 * Score
 * Level designs, level switching
 * Intro
 * Home screen
-* Fix punching
 * Mob death animation
 * Climbing animation
 

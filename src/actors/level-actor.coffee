@@ -115,5 +115,4 @@ define (require, exports, module) ->
         @app.getHeight() - position.y * @GRID_SIZE - @spawnActor.height - @level.scroll.y,
         true
 
-
   module.exports = LevelActor

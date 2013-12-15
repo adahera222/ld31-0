@@ -24,7 +24,8 @@ define (require, exports, module) ->
 
       @offgroundSprite = @spriteSheet.createAnimSprite "#{@spriteBasePath}/offground.png", 3, 0.2
 
-      @punchSprite = @spriteSheet.createSprite "#{@spriteBasePath}/punch.png"
+      if this.dataObject instanceof Player
+        @punchSprite = @spriteSheet.createSprite "#{@spriteBasePath}/punch.png"
 
       @width = @holdingIdleSprite.getWidth()
       @height = @holdingIdleSprite.getHeight()

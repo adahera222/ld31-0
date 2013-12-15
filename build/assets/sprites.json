@@ -1,8 +1,48 @@
 {"frames": {
 
+"enemy/0/holding-idle.png":
+{
+	"frame": {"x":200,"y":112,"w":30,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
+	"sourceSize": {"w":30,"h":30}
+},
+"enemy/0/holding-running.png":
+{
+	"frame": {"x":126,"y":212,"w":60,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
+	"sourceSize": {"w":60,"h":30}
+},
+"enemy/0/idle.png":
+{
+	"frame": {"x":200,"y":80,"w":30,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
+	"sourceSize": {"w":30,"h":30}
+},
+"enemy/0/offground.png":
+{
+	"frame": {"x":2,"y":180,"w":90,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":90,"h":30},
+	"sourceSize": {"w":90,"h":30}
+},
+"enemy/0/run.png":
+{
+	"frame": {"x":94,"y":180,"w":60,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
+	"sourceSize": {"w":60,"h":30}
+},
 "package-back.png":
 {
-	"frame": {"x":92,"y":232,"w":22,"h":18},
+	"frame": {"x":232,"y":100,"w":22,"h":18},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":18},
@@ -10,7 +50,7 @@
 },
 "package.png":
 {
-	"frame": {"x":92,"y":212,"w":22,"h":18},
+	"frame": {"x":232,"y":80,"w":22,"h":18},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":18},
@@ -18,7 +58,7 @@
 },
 "player/holding-idle.png":
 {
-	"frame": {"x":64,"y":180,"w":30,"h":30},
+	"frame": {"x":156,"y":180,"w":30,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
@@ -26,7 +66,7 @@
 },
 "player/holding-running.png":
 {
-	"frame": {"x":2,"y":212,"w":60,"h":30},
+	"frame": {"x":64,"y":212,"w":60,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
@@ -50,7 +90,7 @@
 },
 "player/punch.png":
 {
-	"frame": {"x":64,"y":212,"w":26,"h":30},
+	"frame": {"x":200,"y":144,"w":26,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":30},
@@ -58,7 +98,7 @@
 },
 "player/run.png":
 {
-	"frame": {"x":2,"y":180,"w":60,"h":30},
+	"frame": {"x":2,"y":212,"w":60,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":30},
@@ -119,6 +159,6 @@
 	"format": "RGBA8888",
 	"size": {"w":256,"h":256},
 	"scale": "2",
-	"smartupdate": "$TexturePacker:SmartUpdate:0be846d4b9bdb6cd16bbad201d692f0d:10239509973576eb8a73e2be2bd342ce:1eabdf11f75e3a4fe3147baf7b5be24b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:f04d79f69954fa777d3445931aa92ce9:a9d9d874bef2aeb5f412038e8e73bd4e:1eabdf11f75e3a4fe3147baf7b5be24b$"
 }
 }

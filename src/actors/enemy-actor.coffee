@@ -5,6 +5,9 @@ define (require, exports, module) ->
   HumanActor = require "actors/human-actor"
 
   class EnemyActor extends HumanActor
-    spriteBasePath: "player"
+    constructor: ->
+      @spriteBasePath = "enemy/0"
+
+      super
 
   module.exports = EnemyActor
