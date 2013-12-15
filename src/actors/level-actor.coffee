@@ -83,14 +83,12 @@ define (require, exports, module) ->
 
     _drawLadders: (context) ->
       for ladder in @level.ladders
-        position = ladder.position
-          .clone()
-          .multiply @GRID_SIZE
+        position = ladder.getRealPosition()
         ladderHeight = ladder.height * @GRID_SIZE
 
         @ladderActor.draw context,
           position.x - @level.scroll.x,
-          @app.getHeight() - position.y - ladderHeight - @level.scroll.y,
+          position.y - ladderHeight - @level.scroll.y,
 
 
   module.exports = LevelActor

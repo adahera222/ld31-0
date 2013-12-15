@@ -12,7 +12,7 @@ define (require, exports, module) ->
       @level = new Level @app, this
       @package = new Package @app, this
       @player = new Player @app, this
-      @player.position.set @app.getWidth() / 2, @app.getHeight() - @level.floorHeight
+      @player.position.set 280, 100
 
       @package.attachTo @player
 
@@ -28,7 +28,7 @@ define (require, exports, module) ->
 
     addEnemy: ->
       enemy = new Enemy @app, this
-      enemy.position.set 570, 20
+      enemy.position.set 150, 150
 
       @mobs.push enemy
       @emit "enemy_added", enemy

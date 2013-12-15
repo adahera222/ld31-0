@@ -17,15 +17,13 @@ define (require, exports, module) ->
 
       @speed = new LDFW.Vector2 250, 250
 
-      # "switch_platform" state
-      @aiSwitchDirection = 0
       @aiSwitchAction = null # run or jump
-
-      # "chase" state
-      @aiChaseDirection
+      @aiDirection = 0
 
     update: (delta) ->
       super
+
+      debug @aiState
 
       aiCheckInterval = @_getAICheckInterval()
       timePassed = Date.now() - @lastAICheck
@@ -53,7 +51,8 @@ define (require, exports, module) ->
       ooiData = @_findObjectOfInterest()
 
       # Gain interest
-      if not @objectOfInterest and
+      if (not @objectOfInterest or
+        (@objectOfInterest and @objectOfInterest.object isnt ooiData.object)) and
         ooiData.distance < @interestDistance
           @objectOfInterest = ooiData
           @aiState = @_findAIState()
@@ -62,14 +61,15 @@ define (require, exports, module) ->
       # Lose interest
       else if @objectOfInterest and
         ooiData.distance > @loseInterestDistance
-          console.debug "Lost interest..."
           @objectOfInterest = null
           @_stopAIAction()
           @following = false
 
       else if @objectOfInterest and @onGround
+        @objectOfInterest.platform = @objectOfInterest
+          .object
+          ._findCurrentPlatform()
         @aiState = @_findAIState()
-
 
     _findObjectOfInterest: ->
       if @package.attachedMob is @player
@@ -100,19 +100,23 @@ define (require, exports, module) ->
         nextPlatform = @_findNextLowerPlatform distX, distY
         if nextPlatform
           newAIState = @_findAIStateForPlatform nextPlatform
-          console.debug newAIState, @aiSwitchAction, if @aiSwitchDirection is -1 then "left" else "right"
           return newAIState
         else
-          @aiSwitchDirection = if distX < 0 then -1 else 1
+          @aiDirection = if distX < 0 then -1 else 1
           @aiSwitchAction = "run"
           @targetPlatform = "floor"
           return "switch_platform"
       else if distY < 0
-        # debug "get up"
-        return
+        nextPlatform = @_findNextHigherPlatform distX, distY
+        if nextPlatform
+          newAIState = @_findAIStateForPlatform nextPlatform
+          return newAIState
+        else
+          # No chance... Actually, this should never happen.
+          return "idle"
       else
         # Probably the same platform
-        @aiChaseDirection = if distX < 0 then -1 else 1
+        @aiDirection = if distX < 0 then -1 else 1
         return "chase"
 
     _findAIStateForPlatform: (platform) ->
@@ -124,25 +128,33 @@ define (require, exports, module) ->
       distY = - (@position.y - (@app.getHeight() - platformPosition.y))
       distX = platformPosition.x - @position.x
 
+      currentPlatform = @_findCurrentPlatform()
       @targetPlatform = platform
 
       if distY < 0
         # Do we have a ladder on our platform?
-        # Yes -> Use it
-        # No
-          # Can we reach it by jumping?
-          # Yes -> Jump
-          # No -> Die in a fire.
+        ladderOnPlatform = @level.findLadderOnPlatform currentPlatform
+        if ladderOnPlatform
+          # Yes -> Use it
+          @aiTargetLadder = ladderOnPlatform
+          distX = ladderOnPlatform.getRealPosition().x - @position.x
+          @aiDirection = if distX < 0 then -1 else 1
+          return "walk_to_ladder"
+        else
+          # No
+          @aiDirection = if distX < 0 then -1 else 1
+          @aiSwitchAction = "jump"
+          return "switch_platform"
       # Is the platform on the same level?
       else if distY is 0
         # Jump. Running won't help.
-        @aiSwitchDirection = if distX < 0 then -1 else 1
+        @aiDirection = if distX < 0 then -1 else 1
         @aiSwitchAction = "jump"
         return "switch_platform"
       else
         # Platform is underneath us
         # We're definitely gonna switch the platform
-        @aiSwitchDirection = if distX < 0 then -1 else 1
+        @aiDirection = if distX < 0 then -1 else 1
 
         # Check X distance
         absDistX = Math.abs distX
@@ -150,14 +162,11 @@ define (require, exports, module) ->
           # Large distance -> Would jumping work?
           if absDistX >= Level.GRID_SIZE * 6
             # Yes -> Jump
-            console.debug "Could reach the platform, jumping"
             @aiSwitchAction = "jump"
           else
             # No -> Trial and error. Just run.
-            console.debug "Too large distance, lemming mode!"
             @aiSwitchAction = "run"
         else
-          console.debug "Small distance, running"
           # Small distance, try to run and hit the platform
           @aiSwitchAction = "run"
 
@@ -171,12 +180,16 @@ define (require, exports, module) ->
         @_performPlatformSwitch()
       else if @aiState is "chase"
         @_performChase()
+      else if @aiState is "walk_to_ladder"
+        @_performWalkToLadder()
+      else if @aiState is "climb"
+        @_performClimb()
 
     _performPlatformSwitch: ->
       currentPlatform = @_findCurrentPlatform()
 
-      @velocity.x = @aiSwitchDirection * @speed.x
-      @direction = @aiSwitchDirection
+      @velocity.x = @aiDirection * @speed.x
+      @direction = @aiDirection
 
       if currentPlatform is @targetPlatform
         # We're done here.
@@ -194,15 +207,38 @@ define (require, exports, module) ->
           # platform edge, jump.
           reachedPlatformEdge = @_isAtPlatformEdge(
             currentPlatform,
-            @aiSwitchDirection
+            @aiDirection
           )
 
           if reachedPlatformEdge
             @_jump()
 
     _performChase: ->
-      @velocity.x = @aiChaseDirection * @speed.x
-      @direction = @aiChaseDirection
+      @velocity.x = @aiDirection * @speed.x
+      @direction = @aiDirection
+
+    _performWalkToLadder: ->
+      @velocity.x = @aiDirection * @speed.x
+      @direction = @aiDirection
+
+      if @level.isMobTouchingLadder this, true
+        @_stopAIAction()
+        @aiState = "climb"
+
+    _performClimb: ->
+      @_climb()
+      unless @level.isMobTouchingLadder this
+        @_stopAIAction()
+        @_stopClimbing()
+
+    _climb: ->
+      @onLadder = true
+      @ignoreGravity = true
+      @velocity.y = -@speed.y
+
+    _stopClimbing: ->
+      @ignoreGravity = false
+      @onLadder = false
 
     droppedPackage: ->
       @lastPackageInteraction = Date.now()

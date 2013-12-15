@@ -44,7 +44,26 @@ define (require, exports, module) ->
       else
         @onGround = false
 
-    _findNextLowerPlatform: (excludeOwn = true) ->
+    _findNextHigherPlatform: ->
+      platforms = @level.platforms
+
+      # Find higher platforms
+      interestingPlatforms = []
+      for platform in platforms
+        platformPosition = platform.getRealPosition()
+
+        platformY = platformPosition.y
+        if platformY < @position.y
+          interestingPlatforms.push platform
+
+      # Sort by Y position
+      interestingPlatforms.sort (a, b) ->
+        a.position.y - b.position.y
+
+      # Return the nearest platform
+      return interestingPlatforms[0]
+
+    _findNextLowerPlatform: (excludeOwn = true, xIntersection = false) ->
       platforms = @level.platforms
 
       additionalCheckDistance = -Level.GRID_SIZE / 2
@@ -54,13 +73,18 @@ define (require, exports, module) ->
       # Find lower platforms
       interestingPlatforms = []
       for platform in platforms
-        platformPosition = platform.position
-          .clone()
-          .multiply Level.GRID_SIZE
+        platformPosition = platform.getRealPosition()
 
-        platformY = @app.getHeight() - platformPosition.y
+        platformX = platformPosition.x
+        platformY = platformPosition.y
+        platformWidth = platform.width * Level.GRID_SIZE
+
         if platformY > @position.y + additionalCheckDistance
-          interestingPlatforms.push platform
+          if not xIntersection or
+            (xIntersection and
+              not (@position.x > platformX + platformWidth or
+                @position.x + @width < platformX))
+                  interestingPlatforms.push platform
 
       # Sort by Y position
       interestingPlatforms.sort (a, b) ->
@@ -70,7 +94,7 @@ define (require, exports, module) ->
       return interestingPlatforms[0]
 
     _findCurrentPlatform: ->
-      return @_findNextLowerPlatform(false) or "floor"
+      return @_findNextLowerPlatform(false, true) or "floor"
 
     _isAtPlatformEdge: (platform, direction) ->
       platformPosition = platform.getRealPosition()

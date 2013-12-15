@@ -27,17 +27,15 @@ define (require, exports, module) ->
       }
 
       @ladders.push new Ladder @app, @game, this, {
-        position: new LDFW.Vector2 9, 3
-        height: 7
+        position: new LDFW.Vector2 9, 2
       }
       @ladders.push new Ladder @app, @game, this, {
         position: new LDFW.Vector2 14, 10
-        height: 7
       }
 
     update: -> debug
 
-    isMobTouchingLadder: (mob) ->
+    isMobTouchingLadder: (mob, fullyOnLadder = false) ->
       for ladder in @ladders
         ladderPosition = ladder.position
           .clone()
@@ -46,7 +44,13 @@ define (require, exports, module) ->
         ladderWidth = Level.GRID_SIZE * 2
 
         # Horizontal check
-        minCoverage = 0.3 * Level.GRID_SIZE
+        unless fullyOnLadder
+          # For manual user interaction
+          minCoverage = 0.3 * Level.GRID_SIZE
+        else
+          # For AI interaction
+          minCoverage = 1.5 * Level.GRID_SIZE
+
         unless (mob.position.x + mob.width < ladderPosition.x + minCoverage or
           mob.position.x > ladderPosition.x + ladderWidth - minCoverage)
 
@@ -90,5 +94,12 @@ define (require, exports, module) ->
 
     getRealFloorLevel: ->
       new LDFW.Vector2(0, @app.getHeight() - @floorHeight)
+
+    findLadderOnPlatform: (platform) ->
+      for ladder in @ladders
+        if ladder.position.y is (platform.position?.y or @floorHeight / Level.GRID_SIZE)
+          return ladder
+
+      return false
 
   module.exports = Level
