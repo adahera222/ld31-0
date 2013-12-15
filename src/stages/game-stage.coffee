@@ -45,7 +45,7 @@ define (require, exports, module) ->
         unless packageFree
           intersectsWithPackageHolder = mobActor.intersectsWith packageObject.attachedMob.actor
 
-        pickPackage = ((packageFree and intersectsWithPackage) or
+        pickPackage = ((packageFree and intersectsWithPackage and mobActor.dataObject.canPickPackage()) or
           intersectsWithPackageHolder)
 
         if pickPackage

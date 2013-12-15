@@ -33,7 +33,10 @@ define (require, exports, module) ->
 
         @lastAICheck = Date.now()
 
-      @_performAIAction()
+      unless @stunned
+        @_performAIAction()
+      else
+        @_stopAIAction()
 
     _stopAIAction: ->
       @velocity.x = 0

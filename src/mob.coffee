@@ -4,6 +4,7 @@ define (require, exports, module) ->
 
   class Mob extends PhysicsObject
     stunDuration: 2000
+    minDelayAfterPackageDrop: 300
     constructor: ->
       super
 
@@ -12,6 +13,8 @@ define (require, exports, module) ->
 
       @stunned = false
       @stunStart = null
+
+      @packageDroppedAt = Date.now()
 
     lostPackage: ->
       @stunned = true
@@ -23,6 +26,12 @@ define (require, exports, module) ->
       if @stunned and
         Date.now() - @stunStart > @stunDuration
           @stunned = false
+
+    canPickPackage: ->
+      Date.now() - @packageDroppedAt > @minDelayAfterPackageDrop
+
+    droppedPackage: ->
+      @packageDroppedAt = Date.now()
 
     _jump: ->
       if @onGround and not @onLadder
