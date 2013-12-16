@@ -15,6 +15,9 @@ define (require, exports, module) ->
     constructor: ->
       super
 
+      @levelIndex = 0
+      @levelsCount = 1
+
       @preloader = new LDFW.Preloader this, [
         "assets/sprites.png",
         "assets/sprites.json",
@@ -39,11 +42,7 @@ define (require, exports, module) ->
         atlasJSON = @preloader.get "assets/fonts.json"
 
         @fontsSheet = new LDFW.TextureAtlas atlasJSON.frames, atlasPNG
-
-        @gameScreen = new GameScreen this
         @splashScreen = new SplashScreen this
-        @introScreen = new IntroScreen this
-        @instructionsScreen = new InstructionsScreen this
 
         @screen = @splashScreen
 
@@ -56,17 +55,30 @@ define (require, exports, module) ->
 
       @screen.draw context
 
+    switchToSplashScreen: ->
+      @screen = @splashScreen
+
     switchToIntroScreen: ->
+      @introScreen = new IntroScreen this
       @screen = @introScreen
 
     switchToInstructionsScreen: ->
+      @instructionsScreen = new InstructionsScreen this
       @screen = @instructionsScreen
 
     switchToGameScreen: ->
+      @gameScreen = new GameScreen this
       @screen = @gameScreen
 
+    nextLevel: ->
+      @levelIndex++
+      @restartGame()
+
+    hasNextLevel: ->
+      @levelIndex < @levelsCount - 1
+
     restartGame: ->
-      @gameScreen = new GameScreen this
+      @gameScreen = new GameScreen this, @levelIndex
       @screen = @gameScreen
 
   ###

@@ -86,7 +86,7 @@ define (require, exports, module) ->
       @smallWhiteFont.drawText context, text, @app.getWidth() / 2 - bounds.width / 2, 320
 
       # SCORE
-      text = "0"
+      text = "ZERO! NIL! NADA! NIENTE!"
       bounds = @biggerRedFont.getBounds text
       @biggerRedFont.drawText context, text, @app.getWidth() / 2 - bounds.width / 2, 335
 

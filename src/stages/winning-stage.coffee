@@ -40,8 +40,10 @@ define (require, exports, module) ->
       @game.package.detach()
       @game.winner.actor.update delta
 
-      if @keyboard.pressed @keyboard.Keys.ENTER
-        @app.restartGame()
+      if @keyboard.pressed(@keyboard.Keys.ENTER) and @app.hasNextLevel()
+        @app.nextLevel()
+      else if @keyboard.pressed(@keyboard.Keys.ESC)
+        @app.switchToSplashScreen()
 
     draw: (context) ->
       {width, height} = context.canvas
@@ -69,16 +71,27 @@ define (require, exports, module) ->
 
     _drawText: (context) ->
       # HEADLINE
-      text = "LEVEL PASSED"
+      if @app.hasNextLevel()
+        text = "LEVEL PASSED"
+      else
+        text = "YOU DID IT!"
+
       bounds = @biggerGreenFont.getBounds text
       @biggerGreenFont.drawText context, text, @app.getWidth() / 2 - bounds.width / 2, 220
 
       # HELL YEAH - HAVE FUN...
-      text = "HELL YEAH!"
+      if @app.hasNextLevel()
+        text = "HELL YEAH!"
+      else
+        text = "YOU MASTERED ALL LEVELS"
+
       bounds = @smallWhiteFont.getBounds text
       @smallWhiteFont.drawText context, text, @app.getWidth() / 2 - bounds.width / 2, 260
 
-      text = "HAVE FUN WITH YOUR CONSOLE!"
+      if @app.hasNextLevel()
+        text = "HAVE FUN WITH YOUR CONSOLE!"
+      else
+        text = "NOW GO PLAY WITH YOUR PLAYSTATION 4"
       bounds = @smallWhiteFont.getBounds text
       @smallWhiteFont.drawText context, text, @app.getWidth() / 2 - bounds.width / 2, 275
 
@@ -88,14 +101,23 @@ define (require, exports, module) ->
       @smallWhiteFont.drawText context, text, @app.getWidth() / 2 - bounds.width / 2, 320
 
       # SCORE
-      text = "I DON'T KNOW!!"
+      if @app.hasNextLevel()
+        text = "I DON'T KNOW!!"
+      else
+        text = "I STILL DON'T KNOW!"
+
       bounds = @biggerGreenFont.getBounds text
       @biggerGreenFont.drawText context, text, @app.getWidth() / 2 - bounds.width / 2, 335
 
       # PRESS ENTER TO PLAY NEXT LEVEL
-      text = "PRESS "
-      buttonText = "ENTER"
-      restText = " TO PLAY THE NEXT LEVEL"
+      if @app.hasNextLevel()
+        text = "PRESS "
+        buttonText = "ENTER"
+        restText = " TO PLAY THE NEXT LEVEL"
+      else
+        text = "PRESS "
+        buttonText = "ESC"
+        restText = " TO RETURN TO THE MAIN MENU"
 
       textBounds = @smallWhiteFont.getBounds text
       buttonBounds = @smallWhiteFont.getBounds buttonText

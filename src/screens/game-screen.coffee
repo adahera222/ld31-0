@@ -12,7 +12,7 @@ define (require, exports, module) ->
    * GameScreen definition
   ###
   class GameScreen extends LDFW.Screen
-    constructor: (@app) ->
+    constructor: (@app, @levelIndex) ->
       super
 
       @game = new Game @app
@@ -36,8 +36,10 @@ define (require, exports, module) ->
       unless @game.ended
         @gameStage.update delta
       else
-        @winningStage.update delta
-        @losingStage.update delta
+        if @game.winner is @game.player
+          @winningStage.update delta
+        else
+          @losingStage.update delta
 
       return
 

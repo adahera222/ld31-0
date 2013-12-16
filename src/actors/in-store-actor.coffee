@@ -23,13 +23,13 @@ define (require, exports, module) ->
 
       @attentionSprite = @spriteSheet.createSprite "attention.png"
 
-      @stockPackages = 9
+      @stockPackages = 6
 
       @opacity = 1
       @ended = false
 
       @mobActors = []
-      for i in [0...20]
+      for i in [0...25]
         ((mobActor) =>
           # Mock some states...
           @_mockActorStates mobActor
@@ -48,7 +48,7 @@ define (require, exports, module) ->
       @playerActor.minX = @playerActor.position.x
       @_mockActorStates @playerActor
 
-      @mobActors[8] = @playerActor
+      @mobActors[5] = @playerActor
 
       @lastPackage = Date.now()
       @lastMob = Date.now()

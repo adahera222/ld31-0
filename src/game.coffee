@@ -18,7 +18,7 @@ define (require, exports, module) ->
 
       @spawn = new LDFW.Vector2 400, 100
 
-      @level = new Level @app, this, "level-0"
+      @level = new Level @app, this, "level-#{@app.levelIndex}"
       @package = new Package @app, this
 
       @player = new Player @app, this
