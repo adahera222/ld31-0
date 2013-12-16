@@ -52,6 +52,7 @@ define (require, exports, module) ->
 
     hurt: (direction) ->
       return if @dead
+      return unless @following
 
       @health--
       @knockback.set 14, 10

@@ -27,6 +27,8 @@ define (require, exports, module) ->
     update: (delta) ->
       super
 
+      return if @dead
+
       aiCheckInterval = @_getAICheckInterval()
       timePassed = Date.now() - @lastAICheck
       if timePassed >= aiCheckInterval
@@ -169,7 +171,6 @@ define (require, exports, module) ->
       platformWidth = platform.width * Level.GRID_SIZE
       currentPlatformWidth = currentPlatform.width * Level.GRID_SIZE
 
-      debug platformPosition.x, platformPosition.x + platformWidth, currentPlatformPosition.x, currentPlatformPosition.x + currentPlatformWidth
       if platformPosition.x + platformWidth <= currentPlatformPosition.x
         closestPlatformX = platformPosition.x + platformWidth
       else if platformPosition.x >= currentPlatformPosition.x + currentPlatformWidth or

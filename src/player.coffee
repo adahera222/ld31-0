@@ -4,7 +4,7 @@ define (require, exports, module) ->
   Level = require "level"
 
   class Player extends Mob
-    minPunchDelay: 300
+    minPunchDelay: 100
     constructor: (@app, @game) ->
       super
 

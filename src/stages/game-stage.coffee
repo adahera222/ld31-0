@@ -7,6 +7,7 @@ define (require, exports, module) ->
   PlayerActor = require "actors/player-actor"
   EnemyActor = require "actors/enemy-actor"
   PackageActor = require "actors/package-actor"
+  Level = require "level"
 
   Player = require "player"
   Mob = require "mob"
@@ -85,8 +86,17 @@ define (require, exports, module) ->
           packageObject = @packageActor.package
           packageObject.onIntersect mobActor.dataObject
 
-      for mob in deadMobs
-        @mobActors.splice @mobActors.indexOf(mob), 1
+      for mobActor in deadMobs
+        mob = mobActor.dataObject
+
+        mob.isRunning = -> false
+        mob.velocity.y -= mob.speed.y * 0.3
+        mob.ignoreGravity = true
+        mob.stunned = false
+
+        if mob.position.y < level.height * Level.GRID_SIZE
+          @mobActors.splice @mobActors.indexOf(mob), 1
+          @removeActor mob
 
     draw: (context) ->
       {width, height} = context.canvas

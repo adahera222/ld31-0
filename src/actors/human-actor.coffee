@@ -105,6 +105,9 @@ define (require, exports, module) ->
       if @blinking
         alpha = 0.5
 
+      if @dataObject?.dead
+        alpha = 0.5
+
       context.save()
       context.globalAlpha = alpha
 

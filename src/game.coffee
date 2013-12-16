@@ -60,8 +60,8 @@ define (require, exports, module) ->
         mob.update delta
         deadMobs.push(mob) if mob.dead
 
-      for mob in deadMobs
-        @mobs.splice @mobs.indexOf(mob), 1
+      # for mob in deadMobs
+      #   @mobs.splice @mobs.indexOf(mob), 1
 
       @package.update delta
 
