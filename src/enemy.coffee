@@ -41,6 +41,8 @@ define (require, exports, module) ->
 
     _stopAIAction: ->
       @velocity.x = 0
+      @velocity.y = 0
+      @ignoreGravity = false
       @aiState = "idle"
 
     _getAICheckInterval: ->
@@ -93,6 +95,9 @@ define (require, exports, module) ->
       else if @package.attachedMob is this
         # I HAZ PACKAGE LOLZ
         obj = @level.exits[0]
+        unless obj
+          alert "I MADE A MISTAKE, THERE'S NO EXIT"
+          return @app.switchToSplashScreen()
       else unless @package.attachedMob
         obj = @package
       else
@@ -152,11 +157,31 @@ define (require, exports, module) ->
         .clone()
         .multiply Level.GRID_SIZE
 
-      distY = - (@position.y - (@app.getHeight() - platformPosition.y))
-      distX = platformPosition.x - @position.x
-
       currentPlatform = @_findCurrentPlatform()
+      currentPlatformPosition = platform.position
+        .clone()
+        .multiply Level.GRID_SIZE
+
       @targetPlatform = platform
+
+      # Find the real distance to the platform, not only
+      # to the very left edge of it
+      platformWidth = platform.width * Level.GRID_SIZE
+      currentPlatformWidth = currentPlatform.width * Level.GRID_SIZE
+
+      debug platformPosition.x, platformPosition.x + platformWidth, currentPlatformPosition.x, currentPlatformPosition.x + currentPlatformWidth
+      if platformPosition.x + platformWidth <= currentPlatformPosition.x
+        closestPlatformX = platformPosition.x + platformWidth
+      else if platformPosition.x >= currentPlatformPosition.x + currentPlatformWidth or
+        platformPosition.x <= currentPlatformPosition.x
+          closestPlatformX = platformPosition.x
+      else if platformPosition.x + platformWidth >= currentPlatformPosition.x + currentPlatformWidth
+        closestPlatformX = currentPlatformPosition.x + currentPlatformWidth
+      else
+        closestPlatformX = platformPosition.x
+
+      distY = - (@position.y - (@app.getHeight() - platformPosition.y))
+      distX = closestPlatformX - @position.x
 
       if distY < 0
         # Do we have a ladder on our platform?
@@ -187,7 +212,7 @@ define (require, exports, module) ->
         absDistX = Math.abs distX
         if absDistX >= Level.GRID_SIZE * 3
           # Large distance -> Would jumping work?
-          if absDistX >= Level.GRID_SIZE * 6
+          if absDistX <= Level.GRID_SIZE * 6
             # Yes -> Jump
             @aiSwitchAction = "jump"
           else

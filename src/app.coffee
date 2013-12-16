@@ -15,8 +15,8 @@ define (require, exports, module) ->
     constructor: ->
       super
 
-      @levelIndex = 0
-      @levelsCount = 1
+      @levelIndex = 2
+      @levelsCount = 3
 
       @preloader = new LDFW.Preloader this, [
         "assets/sprites.png",
@@ -29,7 +29,9 @@ define (require, exports, module) ->
         "assets/fonts/pixel-24.fnt",
         "assets/fonts/pixel-8.fnt",
 
-        "assets/levels/level-0.png"
+        "assets/levels/level-0.png",
+        "assets/levels/level-1.png",
+        "assets/levels/level-2.png"
       ]
       @preloader.on "done", =>
 

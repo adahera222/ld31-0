@@ -29,6 +29,7 @@ define (require, exports, module) ->
         @punchSprite = @spriteSheet.createSprite "#{@spriteBasePath}/punch.png"
 
       @attentionSprite = @spriteSheet.createSprite "attention.png"
+      @confusionSprite = @spriteSheet.createSprite "confusion.png"
 
       @width = @holdingIdleSprite.getWidth()
       @height = @holdingIdleSprite.getHeight()
@@ -113,6 +114,9 @@ define (require, exports, module) ->
       if @dataObject?
         if Date.now() - @dataObject.attentionGainedAt < 1000
           @attentionSprite.draw context, dx, dy - 30
+
+        if @dataObject.stunned
+          @confusionSprite.draw context, dx, dy - 30
 
     intersectsWith: (actor) ->
       return not (actor.position.x > @position.x + @width or

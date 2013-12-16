@@ -2,6 +2,14 @@
 
 "attention.png":
 {
+	"frame": {"x":984,"y":446,"w":30,"h":26},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":26},
+	"sourceSize": {"w":30,"h":26}
+},
+"confusion.png":
+{
 	"frame": {"x":984,"y":418,"w":30,"h":26},
 	"rotated": false,
 	"trimmed": false,
@@ -50,7 +58,7 @@
 },
 "enemy/1/holding-idle.png":
 {
-	"frame": {"x":768,"y":406,"w":22,"h":30},
+	"frame": {"x":796,"y":406,"w":22,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":30},
@@ -146,7 +154,7 @@
 },
 "package-back.png":
 {
-	"frame": {"x":816,"y":406,"w":22,"h":18},
+	"frame": {"x":844,"y":406,"w":22,"h":18},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":18},
@@ -154,7 +162,7 @@
 },
 "package.png":
 {
-	"frame": {"x":792,"y":406,"w":22,"h":18},
+	"frame": {"x":820,"y":406,"w":22,"h":18},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":18},
@@ -194,7 +202,7 @@
 },
 "player/punch.png":
 {
-	"frame": {"x":984,"y":446,"w":26,"h":30},
+	"frame": {"x":768,"y":406,"w":26,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":30},
@@ -327,6 +335,6 @@
 	"format": "RGBA8888",
 	"size": {"w":1024,"h":1024},
 	"scale": "2",
-	"smartupdate": "$TexturePacker:SmartUpdate:a21b3ce05606794101f644dcd0842e7d:0e8defc202fed93dbd50e8dbfa180743:1eabdf11f75e3a4fe3147baf7b5be24b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:d421256f9861b4837710cc2153b23bb1:0b2d98326530ddc1a0cf595e02799392:1eabdf11f75e3a4fe3147baf7b5be24b$"
 }
 }

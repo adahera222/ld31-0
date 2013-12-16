@@ -21,6 +21,7 @@ define (require, exports, module) ->
 
       @health = 3
       @dead = false
+      @safeTimeStart = 0
 
     lostPackage: ->
       @stun()
@@ -43,7 +44,11 @@ define (require, exports, module) ->
     droppedPackage: ->
       @packageDroppedAt = Date.now()
 
-    pickedPackage: -> return
+    pickedPackage: ->
+      @safeTimeStart = Date.now()
+
+    isSafe: ->
+      Date.now() - @safeTimeStart < 2000
 
     hurt: (direction) ->
       return if @dead

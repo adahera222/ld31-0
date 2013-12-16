@@ -1,12 +1,14 @@
 Next ToDos
 ==========
 
-* Intro
+* AI FIXES!!
 * Level designs, level switching
 * Score
 
 * Mob death animation
 * Climbing animation
+
+* Intro finetuning (Mobs should pick up a package and carry it away)
 
 AI Fixes
 ========

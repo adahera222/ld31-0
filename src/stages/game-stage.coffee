@@ -73,7 +73,7 @@ define (require, exports, module) ->
 
         pickPackage = (
           (packageFree and intersectsWithPackage and mobActor.dataObject.canPickPackage()) or
-            (intersectsWithPackageHolder and
+            (intersectsWithPackageHolder and not mobActor.dataObject.isSafe() and
               (
                 (packageObject.attachedMob instanceof Player and mobActor.dataObject instanceof Mob) or
                 (packageObject.attachedMob instanceof Mob and mobActor.dataObject instanceof Player)
