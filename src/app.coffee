@@ -15,7 +15,7 @@ define (require, exports, module) ->
     constructor: ->
       super
 
-      @levelIndex = 2
+      @levelIndex = 0
       @levelsCount = 3
 
       @preloader = new LDFW.Preloader this, [
